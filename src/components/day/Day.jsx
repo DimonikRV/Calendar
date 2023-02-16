@@ -1,12 +1,10 @@
-import React from 'react';
-import Hour from '../hour/Hour';
+import React from "react";
+import Hour from "../hour/Hour";
 
-import './day.scss';
+import "./day.scss";
 
 const Day = ({ dataDay, dayEvents }) => {
-  const hours = Array(24)
-    .fill()
-    .map((val, index) => index);
+  const hours = new Array(24).fill().map((val, index) => index);
 
   return (
     <div className="calendar__day" data-day={dataDay}>

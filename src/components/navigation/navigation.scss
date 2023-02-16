@@ -5,7 +5,7 @@
 
   &__header {
     display: flex;
-    height: 100px;
+    height: 60px;
     padding-left: 48px;
   }
 
@@ -14,4 +14,10 @@
     flex: 1;
     border-left: 1px solid #eee;
   }
+}
+
+.time-zone {
+  height: 20px;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
 }
