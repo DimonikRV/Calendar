@@ -6,8 +6,7 @@ export const getWeekStartDate = (date) => {
       ? -6 // for Sunday
       : 1 - dayOfWeek;
 
-  console.log(data);
-  const monday = new Date(dateCopy.setDate(date.getDate() + difference));
+  const monday = new Date(dateCopy.setDate(dateCopy.getDate() + difference));
   return new Date(monday.getFullYear(), monday.getMonth(), monday.getDate());
 };
 
@@ -25,6 +24,19 @@ export const getDateTime = (date, time) => {
   const withHours = new Date(new Date(date).setHours(Number(hours)));
   const withMinutes = new Date(new Date(withHours).setMinutes(Number(minutes)));
   return withMinutes;
+};
+
+export const getCurrentMonths = (weekDates, months) => {
+  return weekDates
+    .map((date) => months[date.getMonth()].slice(0, 3))
+    .filter((item, index, arr) => index === arr.indexOf(item))
+    .join(" - ");
+};
+
+export const getDateFromEvent = (timeValue, dateValue) => {
+  const hours = moment(timeValue).hours();
+  const minutes = moment(timeValue).minutes();
+  return moment(moment(dateValue.hours(hours)).minutes(minutes));
 };
 
 export const formatMins = (mins) => {

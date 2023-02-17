@@ -9,13 +9,14 @@ const Navigation = ({ weekDates }) => {
       <header className="calendar__header">
         {weekDates.map((dayDate) => {
           const currentDate =
+            new Date().getDay() === new Date(dayDate).getDay() &&
             new Date().getDate() === new Date(dayDate).getDate();
-          const currentDay = new Date().getDay() === new Date(dayDate).getDay();
+
           return (
             <div className="calendar__day-label day-label">
               <span
                 className={classNames("day-label__day-name", {
-                  "day-label__day-name_match": currentDay,
+                  "day-label__day-name_match": currentDate,
                 })}
               >
                 {days[dayDate.getDay()]}
