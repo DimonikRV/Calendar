@@ -9,7 +9,20 @@ export const getEvents = async () => {
   const eventsData = await response.json();
   return eventsData;
 };
-export const setEvent = async (event, eventId) => {};
+export const setEvent = async (newEvent) => {
+  try {
+    const response = await fetch(webServerLink, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newEvent),
+    });
+  } catch (error) {
+    throw new Error("Failed to post data");
+  }
+};
+
 const events = [
   {
     id: 1,

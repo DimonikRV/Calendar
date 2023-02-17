@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const getWeekStartDate = (date) => {
   const dateCopy = new Date(date);
   const dayOfWeek = dateCopy.getDay();
@@ -36,7 +38,8 @@ export const getCurrentMonths = (weekDates, months) => {
 export const getDateFromEvent = (timeValue, dateValue) => {
   const hours = moment(timeValue).hours();
   const minutes = moment(timeValue).minutes();
-  return moment(moment(dateValue.hours(hours)).minutes(minutes));
+  const result = new Date(moment(dateValue).hours(hours));
+  return new Date(moment(result).hours(hours));
 };
 
 export const formatMins = (mins) => {
