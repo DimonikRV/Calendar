@@ -9,6 +9,7 @@ export const getEvents = async () => {
   const eventsData = await response.json();
   return eventsData;
 };
+
 export const setEvent = async (newEvent) => {
   try {
     const response = await fetch(webServerLink, {
