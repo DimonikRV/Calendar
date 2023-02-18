@@ -1,13 +1,27 @@
-import React from "react";
-
+import React, { useState } from "react";
 import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
-import events from "../../gateway/events";
-
+import Modal from "../modal/Modal";
+import { getEvents } from "../../gateway/events";
 import "./calendar.scss";
 
-const Calendar = ({ weekDates }) => {
+const Calendar = ({
+  weekDates,
+  isVisible,
+  handleCloseModal,
+  setVisibility,
+}) => {
+  const [events, setEvents] = useState([]);
+
+  const setStateEvents = async () => {
+    try {
+      const eventsData = await getEvents();
+      setEvents(eventsData);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
   return (
     <section className="calendar">
       <Navigation weekDates={weekDates} />
@@ -16,6 +30,12 @@ const Calendar = ({ weekDates }) => {
           <Sidebar />
           <Week weekDates={weekDates} events={events} />
         </div>
+        <Modal
+          isVisible={isVisible}
+          handleCloseModal={handleCloseModal}
+          setStateEvents={setStateEvents}
+          setVisibility={setVisibility}
+        />
       </div>
     </section>
   );

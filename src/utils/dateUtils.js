@@ -35,11 +35,13 @@ export const getCurrentMonths = (weekDates, months) => {
     .join(" - ");
 };
 
-export const getDateFromEvent = (timeValue, dateValue) => {
-  const hours = moment(timeValue).hours();
+export const getDateFromEvent = (dateValue, timeValue) => {
+  const hours = moment(timeValue).hour();
   const minutes = moment(timeValue).minutes();
-  const result = new Date(moment(dateValue).hours(hours));
-  return new Date(moment(result).hours(hours));
+  const result = moment(dateValue)
+    .hour(hours - 1)
+    .format();
+  return new Date(moment(result).minutes(minutes).format());
 };
 
 export const formatMins = (mins) => {

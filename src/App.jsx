@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
-import Header from "./components/header/Header.jsx";
-import Calendar from "./components/calendar/Calendar.jsx";
-import Modal from "./components/modal/Modal.jsx";
+import Header from "./components/header/Header";
+import Calendar from "./components/calendar/Calendar";
 
 import {
   getWeekStartDate,
@@ -53,8 +52,12 @@ const App = () => {
         handelCreateEvent={handelCreateEvent}
         currentMonths={currentMonths}
       />
-      <Calendar weekDates={weekDates} />
-      <Modal isVisible={visibility} handleCloseModal={handleCloseModal} />
+      <Calendar
+        weekDates={weekDates}
+        isVisible={visibility}
+        handleCloseModal={handleCloseModal}
+        setVisibility={setVisibility}
+      />
     </>
   );
 };

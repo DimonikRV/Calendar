@@ -1,28 +1,32 @@
 import React, { useState } from "react";
 import { getDateFromEvent } from "../../utils/dateUtils.js";
-import { getEvents, setEvent } from "../../gateway/events";
+import { postEvent } from "../../gateway/events";
 import "./modal.scss";
 
-const Modal = ({ isVisible, handleCloseModal }) => {
+const Modal = ({
+  isVisible,
+  handleCloseModal,
+  setStateEvents,
+  setVisibility,
+}) => {
   const [eventTitle, setEventTitle] = useState("");
   const [eventStartTime, setEventStartTime] = useState(null);
   const [eventEndTime, setEventEndTime] = useState(null);
   const [eventDescription, setEventDescription] = useState("");
-
-  let eventDateValue = new Date();
+  const [eventDateValue, setEventDateValue] = useState(new Date());
 
   const handleChange = (event) => {
     const { name, value, valueAsDate } = event.target;
 
     switch (name) {
       case "date":
-        eventDateValue = valueAsDate;
+        setEventDateValue(valueAsDate);
         break;
       case "startTime":
-        setEventStartTime(getDateFromEvent(valueAsDate, eventDateValue));
+        setEventStartTime(getDateFromEvent(eventDateValue, valueAsDate));
         break;
       case "endTime":
-        setEventEndTime(getDateFromEvent(valueAsDate, eventDateValue));
+        setEventEndTime(getDateFromEvent(eventDateValue, valueAsDate));
         break;
       case "title":
         setEventTitle(value);
@@ -41,8 +45,9 @@ const Modal = ({ isVisible, handleCloseModal }) => {
       dateTo: eventEndTime,
     };
 
-    setEvent(newEvent)
-      .then(() => getEvents())
+    postEvent(newEvent)
+      .then(() => setStateEvents())
+      .then(() => setVisibility(false))
       .catch((error) => console.log(error.message));
   };
 

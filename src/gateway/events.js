@@ -10,7 +10,7 @@ export const getEvents = async () => {
   return eventsData;
 };
 
-export const setEvent = async (newEvent) => {
+export const postEvent = async (newEvent) => {
   try {
     const response = await fetch(webServerLink, {
       method: "POST",
@@ -19,8 +19,11 @@ export const setEvent = async (newEvent) => {
       },
       body: JSON.stringify(newEvent),
     });
+    if (!response.ok) {
+      throw new Error("Failed to load data");
+    }
   } catch (error) {
-    throw new Error("Failed to post data");
+    console.log(error.message);
   }
 };
 
