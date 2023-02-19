@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
@@ -14,14 +14,17 @@ const Calendar = ({
 }) => {
   const [events, setEvents] = useState([]);
 
-  const setStateEvents = async () => {
-    try {
-      const eventsData = await getEvents();
-      setEvents(eventsData);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const eventsData = await getEvents();
+        setEvents(eventsData);
+      } catch (error) {
+        console.error(error.message);
+      }
+    })();
+  }, []);
+
   return (
     <section className="calendar">
       <Navigation weekDates={weekDates} />
@@ -33,7 +36,7 @@ const Calendar = ({
         <Modal
           isVisible={isVisible}
           handleCloseModal={handleCloseModal}
-          setStateEvents={setStateEvents}
+          setEvents={setEvents}
           setVisibility={setVisibility}
         />
       </div>

@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { getDateFromEvent } from "../../utils/dateUtils.js";
-import { postEvent } from "../../gateway/events";
+import { getEvents, postEvent } from "../../gateway/events";
 import "./modal.scss";
 
-const Modal = ({
-  isVisible,
-  handleCloseModal,
-  setStateEvents,
-  setVisibility,
-}) => {
+const Modal = ({ isVisible, handleCloseModal, setEvents, setVisibility }) => {
   const [eventTitle, setEventTitle] = useState("");
   const [eventStartTime, setEventStartTime] = useState(null);
   const [eventEndTime, setEventEndTime] = useState(null);
@@ -46,7 +41,8 @@ const Modal = ({
     };
 
     postEvent(newEvent)
-      .then(() => setStateEvents())
+      .then(() => getEvents())
+      .then((eventsData) => setEvents(eventsData))
       .then(() => setVisibility(false))
       .catch((error) => console.log(error.message));
   };
