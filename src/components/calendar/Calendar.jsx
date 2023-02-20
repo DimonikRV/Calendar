@@ -3,7 +3,7 @@ import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
 import Modal from "../modal/Modal";
-import { getEvents } from "../../gateway/events";
+import { renderEvents } from "../../gateway/events";
 import "./calendar.scss";
 
 const Calendar = ({
@@ -15,15 +15,8 @@ const Calendar = ({
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const eventsData = await getEvents();
-        setEvents(eventsData);
-      } catch (error) {
-        console.error(error.message);
-      }
-    })();
-  }, []);
+    renderEvents(setEvents);
+  }, [events]);
 
   return (
     <section className="calendar">

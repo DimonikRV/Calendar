@@ -11,18 +11,31 @@ export const getEvents = async () => {
 };
 
 export const postEvent = async (newEvent) => {
+  const response = await fetch(webServerLink, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newEvent),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to load data");
+  }
+};
+
+export const deleteEvent = async (eventId) => {
+  const response = await fetch(`${webServerLink}/${eventId}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete event");
+  }
+};
+export const renderEvents = async (setEvents) => {
   try {
-    const response = await fetch(webServerLink, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newEvent),
-    });
-    if (!response.ok) {
-      throw new Error("Failed to load data");
-    }
+    const eventsData = await getEvents();
+    setEvents(eventsData);
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
   }
 };
