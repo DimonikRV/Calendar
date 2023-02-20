@@ -41,6 +41,10 @@ const Modal = ({ isVisible, handleCloseModal, setEvents, setVisibility }) => {
     };
 
     postEvent(newEvent)
+      .then(() => {
+        const form = event.target.closest(".event-form");
+        return form.reset();
+      })
       .then(renderEvents())
       .then(() => setVisibility(false))
       .catch((error) => console.log(error.message));

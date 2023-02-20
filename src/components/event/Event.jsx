@@ -10,14 +10,10 @@ const Event = ({ height, marginTop, title, time, hourEvents, dataEvent }) => {
   };
 
   const handleDeleteEvent = (event) => {
-    const dataEvent = event.target.closest("event").dataset.event;
+    const dataEvent = event.target.closest(".event").dataset.event;
     const { id } = hourEvents.find((event) => event.id === dataEvent);
-    try {
-      deleteEvent(id);
-      renderEvents();
-    } catch (error) {
-      console.error(error.message);
-    }
+
+    deleteEvent(id).then(renderEvents());
   };
 
   const eventStyle = {
