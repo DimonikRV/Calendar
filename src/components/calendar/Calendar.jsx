@@ -16,7 +16,7 @@ const Calendar = ({
 
   useEffect(() => {
     renderEvents(setEvents);
-  }, [events]);
+  });
 
   return (
     <section className="calendar">
