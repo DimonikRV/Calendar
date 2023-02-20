@@ -39,7 +39,7 @@ export const getDateFromEvent = (dateValue, timeValue) => {
   const hours = moment(timeValue).hour();
   const minutes = moment(timeValue).minutes();
   const result = moment(dateValue)
-    .hour(hours - 1)
+    .hour(hours - 3)
     .format();
   return new Date(moment(result).minutes(minutes).format());
 };
