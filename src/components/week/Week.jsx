@@ -3,7 +3,7 @@ import Day from "../day/Day";
 
 import "./week.scss";
 
-const Week = ({ weekDates, events }) => {
+const Week = ({ weekDates, events, setVisibility }) => {
   return (
     <div className="calendar__week">
       {weekDates.map((dayStart) => {
@@ -17,13 +17,13 @@ const Week = ({ weekDates, events }) => {
             new Date(event.dateFrom) > dayStart &&
             new Date(event.dateTo) < dayEnd
         );
-        console.log(dayEvents);
 
         return (
           <Day
             key={dayStart.getDate()}
             dataDay={dayStart.getDate()}
             dayEvents={dayEvents}
+            setVisibility={setVisibility}
           />
         );
       })}

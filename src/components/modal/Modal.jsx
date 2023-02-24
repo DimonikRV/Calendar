@@ -3,7 +3,7 @@ import { getDateFromEvent } from "../../utils/dateUtils.js";
 import { renderEvents, postEvent } from "../../gateway/events";
 import "./modal.scss";
 
-const Modal = ({ isVisible, handleCloseModal, setEvents, setVisibility }) => {
+const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
   const [eventTitle, setEventTitle] = useState("");
   const [eventStartTime, setEventStartTime] = useState(null);
   const [eventEndTime, setEventEndTime] = useState(null);
@@ -41,10 +41,10 @@ const Modal = ({ isVisible, handleCloseModal, setEvents, setVisibility }) => {
     };
 
     postEvent(newEvent)
-      .then(() => {
-        const form = event.target.closest(".event-form");
-        return form.reset();
-      })
+      // .then(() => {
+      //   const form = event.target.closest(".event-form");
+      //   return form.reset();
+      // })
       .then(renderEvents())
       .then(() => setVisibility(false))
       .catch((error) => console.log(error.message));

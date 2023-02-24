@@ -3,8 +3,8 @@ import Hour from "../hour/Hour";
 
 import "./day.scss";
 
-const Day = ({ dataDay, dayEvents }) => {
-  const hours = new Array(24).fill().map((val, index) => index);
+const Day = ({ dataDay, dayEvents, setVisibility }) => {
+  const hours = new Array(24).fill().map((val, index) => index + 1);
 
   return (
     <div className="calendar__day" data-day={dataDay}>
@@ -15,7 +15,13 @@ const Day = ({ dataDay, dayEvents }) => {
         );
 
         return (
-          <Hour key={dataDay + hour} dataHour={hour} hourEvents={hourEvents} />
+          <Hour
+            key={dataDay + hour}
+            dataHour={hour}
+            hourEvents={hourEvents}
+            setVisibility={setVisibility}
+            dataDay={dataDay}
+          />
         );
       })}
     </div>

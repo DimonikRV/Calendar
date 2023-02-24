@@ -28,15 +28,48 @@ const Event = ({ height, marginTop, title, time, hourEvents, dataEvent }) => {
       data-event={dataEvent}
       onClick={handleChoose}
     >
-      <div className="event__title">{title}</div>
-      <div className="event__time">{time}</div>
+      {" "}
+      <div className="event-body">
+        <div className="event__title">{title}</div>
+        <div className="event__time">{time}</div>
+      </div>
       {checked && (
-        <div className="event__pop-up">
-          <button className="event-close" onClick={handleDeleteEvent}>
-            <i className="fa fa-trash" aria-hidden="true"></i>
-          </button>
-          Delete
-        </div>
+        <button
+          className="delete-event-btn"
+          onClick={handleDeleteEvent}
+          style={{
+            position: "absolute",
+            top: `${height - 5}px`,
+            left: "60px",
+            display: "flex",
+            alignItems: "center",
+            padding: `10px 20px`,
+            width: "200px",
+            height: "50px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            border: "none",
+            transition: "all .1s ease",
+          }}
+        >
+          <i
+            className="fa fa-trash"
+            aria-hidden="true"
+            style={{
+              marginRight: "40px",
+            }}
+          ></i>
+          <span
+            className="pop-up__name"
+            style={{
+              fontSize: "20px",
+              fontWeight: "700",
+              color: "black",
+            }}
+          >
+            Delete
+          </span>
+        </button>
       )}
     </div>
   );

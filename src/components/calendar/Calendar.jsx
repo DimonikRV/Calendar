@@ -24,7 +24,11 @@ const Calendar = ({
       <div className="calendar__body">
         <div className="calendar__week-container">
           <Sidebar />
-          <Week weekDates={weekDates} events={events} />
+          <Week
+            weekDates={weekDates}
+            events={events}
+            setVisibility={setVisibility}
+          />
         </div>
         <Modal
           isVisible={isVisible}
