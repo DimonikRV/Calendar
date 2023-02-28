@@ -28,15 +28,17 @@ const Event = ({
     cursor: "pointer",
   };
 
-  let checked;
   const [keyEvent, value] = Object.entries(currentEvent).reduce(
     (acc, curEvent) => acc.concat(curEvent),
     []
   );
 
+  let checked;
+
   if (keyEvent === dataEvent) {
     checked = value;
   }
+
   return (
     <div className="event" style={eventStyle} data-event={dataEvent}>
       <div className="event-body">

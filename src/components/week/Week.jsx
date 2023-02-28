@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Day from "../day/Day";
 import PropTypes from "prop-types";
 import "./week.scss";
 
 const Week = ({ weekDates, events, setVisibility, setEvents }) => {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState({});
   let currentEvent;
 
   const handleChoose = (event) => {
@@ -15,12 +15,12 @@ const Week = ({ weekDates, events, setVisibility, setEvents }) => {
     });
   };
 
-  const onCreateEventHandle = (event) => {
-    if (!event.target.classList.contains(".delete-event-btn")) {
-      closeDeleteBtn();
-    }
-    setVisibility(true);
-  };
+  // const onCreateEventHandle = (event) => {
+  //   if (!event.target.classList.contains(".delete-event-btn")) {
+  //     closeDeleteBtn();
+  //   }
+  //   setVisibility(true);
+  // };
 
   return (
     <div className="calendar__week" onClick={handleChoose}>

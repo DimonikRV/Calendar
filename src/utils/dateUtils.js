@@ -36,12 +36,7 @@ export const getCurrentMonths = (weekDates, months) => {
 };
 
 export const getDateFromEvent = (dateValue, timeValue) => {
-  const hours = moment(timeValue).hour();
-  const minutes = moment(timeValue).minutes();
-  const result = moment(dateValue)
-    .hour(hours - 3)
-    .format();
-  return new Date(moment(result).minutes(minutes).format());
+  return moment(`${dateValue}/${timeValue}`).format();
 };
 
 export const formatMins = (mins) => {

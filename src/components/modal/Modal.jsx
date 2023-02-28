@@ -4,46 +4,36 @@ import { renderEvents, postEvent } from "../../gateway/events";
 import "./modal.scss";
 
 const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
-  const [eventTitle, setEventTitle] = useState("");
-  const [eventStartTime, setEventStartTime] = useState(null);
-  const [eventEndTime, setEventEndTime] = useState(null);
-  const [eventDescription, setEventDescription] = useState("");
-  const [eventDateValue, setEventDateValue] = useState(new Date());
+  const [formData, setFormData] = useState({
+    title: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    description: "",
+  });
 
   const handleChange = (event) => {
-    const { name, value, valueAsDate } = event.target;
+    const { name, value } = event.target;
 
-    switch (name) {
-      case "date":
-        setEventDateValue(valueAsDate);
-        break;
-      case "startTime":
-        setEventStartTime(getDateFromEvent(eventDateValue, valueAsDate));
-        break;
-      case "endTime":
-        setEventEndTime(getDateFromEvent(eventDateValue, valueAsDate));
-        break;
-      case "title":
-        setEventTitle(value);
-        break;
-      case "description":
-        setEventDescription(value);
-        break;
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
+
+  const { date, startTime, endTime, description, title } = formData;
+
   const handleSubmitEvent = () => {
+    const dateFrom = getDateFromEvent(date, startTime);
+    const dateTo = getDateFromEvent(date, endTime);
     const newEvent = {
-      title: eventTitle,
-      description: eventDescription,
-      dateFrom: eventStartTime,
-      dateTo: eventEndTime,
+      title,
+      description,
+      dateFrom,
+      dateTo,
     };
 
     postEvent(newEvent)
-      // .then(() => {
-      //   const form = event.target.closest(".event-form");
-      //   return form.reset();
-      // })
       .then(renderEvents())
       .then(() => setVisibility(false))
       .catch((error) => console.log(error.message));
@@ -69,7 +59,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
               name="title"
               placeholder="Title"
               className="event-form__field"
-              value={eventTitle}
+              value={title}
               onChange={handleChange}
             />
             <div className="event-form__time">
@@ -77,14 +67,14 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
                 type="date"
                 name="date"
                 className="event-form__field"
-                valueAsDate={eventDateValue}
+                value={date}
                 onChange={handleChange}
               />
               <input
                 type="time"
                 name="startTime"
                 className="event-form__field"
-                valueAsDate={eventStartTime}
+                value={startTime}
                 onChange={handleChange}
               />
               <span>-</span>
@@ -92,7 +82,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
                 type="time"
                 name="endTime"
                 className="event-form__field"
-                valueAsDate={eventEndTime}
+                value={endTime}
                 onChange={handleChange}
               />
             </div>
@@ -100,7 +90,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
               name="description"
               placeholder="Description"
               className="event-form__field"
-              value={eventDescription}
+              value={description}
               onChange={handleChange}
             ></textarea>
             <button
