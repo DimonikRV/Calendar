@@ -1,10 +1,10 @@
 import React from "react";
 import Hour from "../hour/Hour";
-
+import PropTypes from "prop-types";
 import "./day.scss";
 
-const Day = ({ dataDay, dayEvents, setVisibility }) => {
-  const hours = new Array(24).fill().map((val, index) => index + 1);
+const Day = ({ dataDay, dayEvents, setEvents, checked }) => {
+  const hours = new Array(24).fill().map((val, index) => index);
 
   return (
     <div className="calendar__day" data-day={dataDay}>
@@ -19,8 +19,9 @@ const Day = ({ dataDay, dayEvents, setVisibility }) => {
             key={dataDay + hour}
             dataHour={hour}
             hourEvents={hourEvents}
-            setVisibility={setVisibility}
             dataDay={dataDay}
+            setEvents={setEvents}
+            currentEvent={checked}
           />
         );
       })}
@@ -28,4 +29,12 @@ const Day = ({ dataDay, dayEvents, setVisibility }) => {
   );
 };
 
+// Day.propTypes = {
+//   dayEvents: PropTypes.array,
+//   dataDay: PropTypes.number.isRequired,
+//   setEvents: PropTypes.func.isRequired,
+// };
+// Day.defaultProps = {
+//   dayEvents: [],
+// };
 export default Day;

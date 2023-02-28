@@ -1,34 +1,44 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { deleteEvent, renderEvents } from "../../gateway/events";
 import "./event.scss";
 
-const Event = ({ height, marginTop, title, time, hourEvents, dataEvent }) => {
-  const [checked, setChecked] = useState(false);
-
-  const handleChoose = () => {
-    setChecked(true);
-  };
-
+const Event = ({
+  height,
+  top,
+  title,
+  time,
+  hourEvents,
+  dataEvent,
+  setEvents,
+  currentEvent,
+}) => {
   const handleDeleteEvent = (event) => {
     const dataEvent = event.target.closest(".event").dataset.event;
     const { id } = hourEvents.find((event) => event.id === dataEvent);
 
-    deleteEvent(id).then(renderEvents());
+    deleteEvent(id).then(renderEvents(setEvents));
   };
 
   const eventStyle = {
     height,
-    marginTop,
+    top,
+    zIndex: "2",
+    position: "absolute",
+    cursor: "pointer",
   };
 
+  let checked;
+  const [keyEvent, value] = Object.entries(currentEvent).reduce(
+    (acc, curEvent) => acc.concat(curEvent),
+    []
+  );
+
+  if (keyEvent === dataEvent) {
+    checked = value;
+  }
   return (
-    <div
-      style={eventStyle}
-      className="event"
-      data-event={dataEvent}
-      onClick={handleChoose}
-    >
-      {" "}
+    <div className="event" style={eventStyle} data-event={dataEvent}>
       <div className="event-body">
         <div className="event__title">{title}</div>
         <div className="event__time">{time}</div>
@@ -74,5 +84,16 @@ const Event = ({ height, marginTop, title, time, hourEvents, dataEvent }) => {
     </div>
   );
 };
-
+// Event.propTypes = {
+//   dataEvent: PropTypes.number.isRequired,
+//   hourEvents: PropTypes.array.isRequired,
+//   time: PropTypes.string.isRequired,
+//   title: PropTypes.string.isRequired,
+//   height: PropTypes.number.isRequired,
+//   top: PropTypes.number.isRequired,
+//   setEvents: PropTypes.func.isRequired,
+// };
+// Event.defaultProps = {
+//   hourEvents: [],
+// };
 export default Event;

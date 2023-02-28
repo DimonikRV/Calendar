@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import Navigation from "./../navigation/Navigation";
 import Week from "../week/Week";
 import Sidebar from "../sidebar/Sidebar";
@@ -16,7 +17,7 @@ const Calendar = ({
 
   useEffect(() => {
     renderEvents(setEvents);
-  });
+  }, []);
 
   return (
     <section className="calendar">
@@ -28,6 +29,7 @@ const Calendar = ({
             weekDates={weekDates}
             events={events}
             setVisibility={setVisibility}
+            setEvents={setEvents}
           />
         </div>
         <Modal
@@ -39,6 +41,13 @@ const Calendar = ({
       </div>
     </section>
   );
+};
+
+Calendar.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  handleCloseModal: PropTypes.func.isRequired,
+  setVisibility: PropTypes.func.isRequired,
 };
 
 export default Calendar;

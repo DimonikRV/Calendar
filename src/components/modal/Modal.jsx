@@ -31,8 +31,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
         break;
     }
   };
-  const handleSubmitEvent = (event) => {
-    event.preventDefault();
+  const handleSubmitEvent = () => {
     const newEvent = {
       title: eventTitle,
       description: eventDescription,

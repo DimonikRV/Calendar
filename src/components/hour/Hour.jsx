@@ -1,50 +1,47 @@
 import React, { useState, useEffect } from "react";
-import classNames from "classnames";
+import moment from "moment";
+import PropTypes from "prop-types";
 import Event from "../event/Event";
 import { formatMins } from "../../../src/utils/dateUtils.js";
 
-const Hour = ({ dataHour, dataDay, hourEvents, setVisibility }) => {
-  const onCreateEventHandle = () => {
-    setVisibility(true);
-  };
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const minutes = new Array(60).fill().map((val, index) => index);
-
-  const currentTime = (function () {
-    const curDate = new Date(new Date().setDate(dataDay)).setHours(dataHour);
-    return curDate;
-  })();
+const Hour = ({ dataHour, dataDay, hourEvents, setEvents, currentEvent }) => {
+  const [currentMinute, setCurrentMinute] = useState(
+    moment(new Date()).minute()
+  );
 
   useEffect(() => {
-    const interval = setTimeout(() => setCurrentDate(new Date()), 6000);
+    const interval = setInterval(() => {
+      const position = moment(new Date()).minute();
+      setCurrentMinute(position);
+    }, 6000);
     return () => clearInterval(interval);
-  }, [new Date()]);
+  }, []);
 
-  const isRedLine = currentTime === currentDate.getTime();
-
-  const minuteTime = classNames("minute", { "time-counter": isRedLine });
+  const isRedLine =
+    moment(new Date()).hour() === dataHour &&
+    moment(new Date()).date() === dataDay;
 
   return (
     <div
       className="calendar__time-slot"
-      data-time={dataHour + 1}
-      onClick={onCreateEventHandle}
+      style={{
+        position: "relative",
+      }}
+      data-time={dataHour}
     >
-      {
-        minutes.map((minute) => {
-          return <div className={minuteTime} key={dataHour + minute}></div>;
-        })
+      {isRedLine && (
+        <div
+          className="time-counter"
+          style={{
+            position: "absolute",
+            marginTop: `${currentMinute}px`,
+            background: "red",
+            width: "100%",
+            height: "1px",
+          }}
+        ></div>
+      )}
 
-        // return (
-        //   <Hour
-        //     key={dataDay + hour}
-        //     dataHour={hour}
-        //     hourEvents={hourEvents}
-        //     setVisibility={setVisibility}
-        //     dataDay={dataDay}
-        //   />
-        // );
-      }
       {hourEvents &&
         hourEvents.map(({ id, dateFrom, dateTo, title }) => {
           const eventStart = `${new Date(dateFrom).getHours()}:${formatMins(
@@ -63,11 +60,13 @@ const Hour = ({ dataHour, dataDay, hourEvents, setVisibility }) => {
                   (new Date(dateTo).getTime() - new Date(dateFrom).getTime()) /
                   (1000 * 60)
                 }
-                marginTop={new Date(dateFrom).getMinutes()}
+                top={new Date(dateFrom).getMinutes()}
                 time={`${eventStart} - ${eventEnd}`}
                 title={title}
                 hourEvents={hourEvents}
                 dataEvent={id}
+                setEvents={setEvents}
+                currentEvent={currentEvent}
               />
             </>
           );
@@ -75,5 +74,13 @@ const Hour = ({ dataHour, dataDay, hourEvents, setVisibility }) => {
     </div>
   );
 };
-
+// Hour.propTypes = {
+//   dataHour: PropTypes.number.isRequired,
+//   dataDay: PropTypes.number.isRequired,
+//   hourEvents: PropTypes.array.isRequired,
+//   setEvents: PropTypes.func.isRequired,
+// };
+// Hour.defaultProps = {
+//   hourEvents: [],
+// };
 export default Hour;

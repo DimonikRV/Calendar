@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import "./header.scss";
 
 const Header = ({
@@ -36,6 +36,13 @@ const Header = ({
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  handelChangeWeek: PropTypes.func.isRequired,
+  handelCurrentWeek: PropTypes.func.isRequired,
+  handelCreateEvent: PropTypes.func.isRequired,
+  currentMonths: PropTypes.string.isRequired,
 };
 
 export default Header;
