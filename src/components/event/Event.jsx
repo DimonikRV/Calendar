@@ -28,14 +28,14 @@ const Event = ({
     cursor: "pointer",
   };
 
-  const [keyEvent, value] = Object.entries(currentEvent).reduce(
+  const [idEvent, value] = Object.entries(currentEvent).reduce(
     (acc, curEvent) => acc.concat(curEvent),
     []
   );
 
   let checked;
 
-  if (keyEvent === dataEvent) {
+  if (idEvent === dataEvent) {
     checked = value;
   }
 

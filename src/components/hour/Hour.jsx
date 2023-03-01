@@ -11,8 +11,7 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents, currentEvent }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const position = moment(new Date()).minute();
-      setCurrentMinute(position);
+      setCurrentMinute(moment(new Date()).minute());
     }, 6000);
     return () => clearInterval(interval);
   }, []);

@@ -36,6 +36,6 @@ export const renderEvents = async (setEvents) => {
     const eventsData = await getEvents();
     setEvents(eventsData);
   } catch (error) {
-    console.error(error.message);
+    alert("Can't display events");
   }
 };
