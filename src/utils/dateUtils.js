@@ -30,7 +30,9 @@ export const getDateTime = (date, time) => {
 
 export const getCurrentMonths = (weekDates, months) => {
   return weekDates
-    .map((date) => months[date.getMonth()].slice(0, 3))
+    .map(
+      (date) => `${months[date.getMonth()].slice(0, 3)}  ${date.getFullYear()}`
+    )
     .filter((item, index, arr) => index === arr.indexOf(item))
     .join(" - ");
 };

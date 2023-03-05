@@ -9,6 +9,7 @@
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    box-shadow: 0px 0px 33px 18px #ccc;
   }
 }
 
@@ -24,7 +25,10 @@
 
 .create-event {
   display: flex;
+  align-items: center;
   flex-direction: column;
+  height: 500px;
+  width: 500px;
 
   &__close-btn {
     margin-left: auto;
@@ -42,10 +46,54 @@
 .event-form {
   display: flex;
   flex-direction: column;
+  padding-top: 50px;
+  padding-left: 20px;
+
+  & > *:not(:last-child) {
+    margin-bottom: 90px;
+  }
 
   &__field {
-    margin: 8px;
-    border: none;
+    margin: 30px 0;
+
+    &-title {
+      margin-left: 50px;
+      font-size: 24px;
+      border: none;
+      border-bottom: 3px solid #eee;
+      outline: none;
+      transition: all 0.3s ease;
+      &:focus {
+        border-bottom: 3px solid #6495ed;
+      }
+    }
+
+    &-date {
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+    &-time {
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+    &-description {
+      border: none;
+      outline: none;
+      padding-left: 10px;
+      &:focus {
+        border-bottom: 3px solid #6495ed;
+      }
+    }
+  }
+  &__time {
+    padding-left: 10px;
+    margin-right: 100px;
+
+    & > *:not(:last-child) {
+      margin-right: 20px;
+    }
   }
 
   &__submit-btn {
@@ -53,9 +101,10 @@
     margin-left: auto;
     border: none;
     color: #fff;
-    background-color: cornflowerblue;
+    background-color: #6495ed;
     border: none;
     padding: 8px 16px;
     border-radius: 8px;
+    cursor: pointer;
   }
 }

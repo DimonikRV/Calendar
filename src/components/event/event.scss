@@ -16,9 +16,10 @@
     height: 100%;
     padding: 8px;
     border-radius: 8px;
+    overflow: hidden;
 
     &:hover {
-      background-color: red;
+      background-color: #f03f3f;
     }
     &__title {
       text-overflow: ellipsis;
@@ -27,6 +28,21 @@
   }
 }
 
-.delete-event-btn:hover {
-  background-color: #dacfcf;
+.delete-event-btn {
+  position: absolute;
+  z-index: 50;
+  &:hover {
+    background-color: #f03f3f;
+    & .delete-event-btn__name {
+      color: #fff;
+    }
+    .fa {
+      color: #fff;
+    }
+  }
+  &__name {
+    font-size: 20px;
+    font-weight: 700;
+    color: "black";
+  }
 }

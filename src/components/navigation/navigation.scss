@@ -1,18 +1,36 @@
-.calendar {
+.day-label {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 60px);
+  align-items: center;
+  justify-content: space-around;
+  opacity: 0.6;
 
-  &__header {
-    display: flex;
-    height: 125px;
-    padding-left: 48px;
+  &__day-name {
+    font-size: 16px;
+    text-transform: uppercase;
+
+    &_match {
+      color: #1965f3;
+      opacity: 1;
+    }
   }
 
-  &__day {
-    position: relative;
-    flex: 1;
-    border-left: 1px solid #eee;
+  &__day-number {
+    margin-top: 5px;
+    font-size: 20px;
+
+    &_match {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      color: #fff;
+      background-color: #1965f3;
+      border-radius: 50%;
+      opacity: 1;
+    }
   }
 }
 

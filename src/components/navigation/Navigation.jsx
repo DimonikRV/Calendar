@@ -8,12 +8,13 @@ const Navigation = ({ weekDates }) => {
     <>
       <header className="calendar__header">
         {weekDates.map((dayDate) => {
+          const date = new Date(dayDate).getDate();
           const currentDate =
             new Date().getDay() === new Date(dayDate).getDay() &&
-            new Date().getDate() === new Date(dayDate).getDate();
+            new Date().getDate() === date;
 
           return (
-            <div className="calendar__day-label day-label">
+            <div className="calendar__day-label day-label" key={date}>
               <span
                 className={classNames("day-label__day-name", {
                   "day-label__day-name_match": currentDate,

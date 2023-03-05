@@ -1,0 +1,12 @@
+.calendar {
+  &__day {
+    position: relative;
+    flex: 1;
+    border-left: 1px solid #eee;
+
+    &-label {
+      padding: 10px 0;
+      flex: 1;
+    }
+  }
+}

@@ -23,6 +23,17 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
 
   const { date, startTime, endTime, description, title } = formData;
 
+  const handleFocus = (event) => {
+    event.target.placeholder = "";
+  };
+  const handleBlur = (event) => {
+    if (event.target.name === "title") {
+      event.target.placeholder = "Event";
+    } else if (event.target.name === "description") {
+      event.target.placeholder = "Description";
+    }
+  };
+
   const handleSubmitEvent = () => {
     const dateFrom = getDateFromEvent(date, startTime);
     const dateTo = getDateFromEvent(date, endTime);
@@ -33,10 +44,13 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
       dateTo,
     };
 
+    const eventForm = document.querySelector(".event-form");
+
     postEvent(newEvent)
       .then(renderEvents())
       .then(() => setVisibility(false))
-      .catch((error) => console.log(error.message));
+      .then(() => eventForm.reset())
+      .catch((error) => alert(error.message));
   };
 
   if (!isVisible) {
@@ -57,41 +71,49 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
             <input
               type="text"
               name="title"
-              placeholder="Title"
-              className="event-form__field"
+              placeholder="Event"
+              className="event-form__field-title"
               value={title}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required
             />
             <div className="event-form__time">
               <input
                 type="date"
                 name="date"
-                className="event-form__field"
+                className="event-form__field-date"
                 value={date}
                 onChange={handleChange}
+                required
               />
               <input
                 type="time"
                 name="startTime"
-                className="event-form__field"
+                className="event-form__field-time"
                 value={startTime}
                 onChange={handleChange}
+                required
               />
-              <span>-</span>
+              <span> - </span>
               <input
                 type="time"
                 name="endTime"
-                className="event-form__field"
+                className="event-form__field-time"
                 value={endTime}
                 onChange={handleChange}
+                required
               />
             </div>
             <textarea
               name="description"
+              className="event-form__field-description"
               placeholder="Description"
-              className="event-form__field"
               value={description}
               onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
             ></textarea>
             <button
               type="submit"
