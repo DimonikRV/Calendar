@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import { deleteEvent, renderEvents } from '../../gateway/events';
 import './event.scss';
 
-const Event = ({ height, top, title, time, hourEvents, weekFirstEvent, setEvents, checked }) => {
+const Event = ({ height, top, title, time, weekFirstEvent, setEvents, checked, id }) => {
   let checkedEvent;
 
-  const handleDeleteEvent = event => {
-    const dataEvent = event.target.closest('.event').dataset.event;
-    const { id } = hourEvents.find(event => event.id === dataEvent);
-
+  const handleDeleteEvent = () => {
     deleteEvent(id)
       .then(() => renderEvents(setEvents))
       .catch(error => alert(error.message));
@@ -20,6 +17,7 @@ const Event = ({ height, top, title, time, hourEvents, weekFirstEvent, setEvents
     top,
     cursor: 'pointer',
     zIndex: '1',
+    position: 'relative',
   };
 
   const [idEvent, value] = Object.entries(checked).reduce(
@@ -32,10 +30,12 @@ const Event = ({ height, top, title, time, hourEvents, weekFirstEvent, setEvents
   }
 
   return (
-    <div className="event" style={eventStyle} data-event={weekFirstEvent}>
-      <div className="event-body">
-        <div className="event__title">{title}</div>
-        <div className="event__time">{time}</div>
+    <>
+      <div className="event" style={eventStyle} data-event={weekFirstEvent}>
+        <div className="event-body">
+          <div className="event__title">{title}</div>
+          <div className="event__time">{time}</div>
+        </div>
       </div>
       {checkedEvent && (
         <button
@@ -43,6 +43,7 @@ const Event = ({ height, top, title, time, hourEvents, weekFirstEvent, setEvents
           onClick={handleDeleteEvent}
           style={{
             position: 'absolute',
+            zIndex: '50',
             top: `${height - 5}px`,
             zIndex: `5`,
             left: '50%',
@@ -68,11 +69,10 @@ const Event = ({ height, top, title, time, hourEvents, weekFirstEvent, setEvents
           <span className="delete-event-btn__name">Delete</span>
         </button>
       )}
-    </div>
+    </>
   );
 };
 Event.propTypes = {
-  hourEvents: PropTypes.array,
   weekFirstEvent: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -81,7 +81,5 @@ Event.propTypes = {
   setEvents: PropTypes.func.isRequired,
   checked: PropTypes.object.isRequired,
 };
-Event.defaultProps = {
-  hourEvents: null,
-};
+
 export default Event;

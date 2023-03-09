@@ -58,10 +58,10 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents, checked }) => {
                 top={new Date(dateFrom).getMinutes()}
                 time={`${eventStart} - ${eventEnd}`}
                 title={title}
-                hourEvents={hourEvents}
                 weekFirstEvent={id}
                 setEvents={setEvents}
                 checked={checked}
+                id={id}
               />
             </>
           );
