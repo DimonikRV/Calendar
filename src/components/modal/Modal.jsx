@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import { getDateFromEvent } from "../../utils/dateUtils.js";
-import { renderEvents, postEvent } from "../../gateway/events";
-import "./modal.scss";
+import React, { useState } from 'react';
+import { getDateFromEvent } from '../../utils/dateUtils.js';
+import { renderEvents, postEvent } from '../../gateway/events';
+import PropTypes from 'prop-types';
+import './modal.scss';
 
 const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    date: "",
-    startTime: "",
-    endTime: "",
-    description: "",
+    title: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    description: '',
   });
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.target;
 
     setFormData({
@@ -23,14 +24,14 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
 
   const { date, startTime, endTime, description, title } = formData;
 
-  const handleFocus = (event) => {
-    event.target.placeholder = "";
+  const handleFocus = event => {
+    event.target.placeholder = '';
   };
-  const handleBlur = (event) => {
-    if (event.target.name === "title") {
-      event.target.placeholder = "Event";
-    } else if (event.target.name === "description") {
-      event.target.placeholder = "Description";
+  const handleBlur = event => {
+    if (event.target.name === 'title') {
+      event.target.placeholder = 'Event';
+    } else if (event.target.name === 'description') {
+      event.target.placeholder = 'Description';
     }
   };
 
@@ -44,13 +45,13 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
       dateTo,
     };
 
-    const eventForm = document.querySelector(".event-form");
+    const eventForm = document.querySelector('.event-form');
 
     postEvent(newEvent)
       .then(renderEvents())
       .then(() => setVisibility(false))
       .then(() => eventForm.reset())
-      .catch((error) => alert(error.message));
+      .catch(error => alert(error.message));
   };
 
   if (!isVisible) {
@@ -61,10 +62,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          <button
-            className="create-event__close-btn"
-            onClick={handleCloseModal}
-          >
+          <button className="create-event__close-btn" onClick={handleCloseModal}>
             +
           </button>
           <form className="event-form">
@@ -115,11 +113,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
               onFocus={handleFocus}
               onBlur={handleBlur}
             ></textarea>
-            <button
-              type="submit"
-              className="event-form__submit-btn"
-              onClick={handleSubmitEvent}
-            >
+            <button type="submit" className="event-form__submit-btn" onClick={handleSubmitEvent}>
               Create
             </button>
           </form>
@@ -127,6 +121,13 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  isVisible: PropTypes.bool,
+  handleCloseModal: PropTypes.func.isRequired,
+  setEvents: PropTypes.func.isRequired,
+  setVisibility: PropTypes.func.isRequired,
 };
 
 export default Modal;

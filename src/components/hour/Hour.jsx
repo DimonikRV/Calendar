@@ -5,7 +5,7 @@ import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
 import './hour.scss';
 
-const Hour = ({ dataHour, dataDay, hourEvents, setEvents, checked }) => {
+const Hour = ({ dataHour, dataDay, hourEvents, setEvents, eventChecked }) => {
   const [currentMinute, setCurrentMinute] = useState(moment(new Date()).minute());
 
   useEffect(() => {
@@ -51,19 +51,16 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents, checked }) => {
           )}`;
 
           return (
-            <>
-              <Event
-                key={id}
-                height={(new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / (1000 * 60)}
-                top={new Date(dateFrom).getMinutes()}
-                time={`${eventStart} - ${eventEnd}`}
-                title={title}
-                weekFirstEvent={id}
-                setEvents={setEvents}
-                checked={checked}
-                id={id}
-              />
-            </>
+            <Event
+              key={id}
+              height={(new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / (1000 * 60)}
+              top={new Date(dateFrom).getMinutes()}
+              time={`${eventStart} - ${eventEnd}`}
+              title={title}
+              setEvents={setEvents}
+              eventChecked={eventChecked}
+              id={id}
+            />
           );
         })}
     </div>
@@ -74,7 +71,7 @@ Hour.propTypes = {
   dataDay: PropTypes.number.isRequired,
   hourEvents: PropTypes.array.isRequired,
   setEvents: PropTypes.func.isRequired,
-  checked: PropTypes.object.isRequired,
+  eventChecked: PropTypes.object.isRequired,
 };
 Hour.defaultProps = {
   hourEvents: [],

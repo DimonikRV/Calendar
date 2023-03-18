@@ -4,21 +4,21 @@ import PropTypes from 'prop-types';
 import './week.scss';
 
 const Week = ({ weekDates, events, setEvents }) => {
-  const [checked, setChecked] = useState({});
+  const [eventChecked, setEventChecked] = useState({});
   let currentEvent;
 
   const handleChoose = event => {
     event.stopPropagation();
     if (!event.target.closest('.event')) {
       const buttnId = document.querySelector('.event').dataset.event;
-      setChecked({
+      setEventChecked({
         [buttnId]: false,
       });
       return;
     }
     currentEvent = event.target.closest('.event').dataset.event;
 
-    setChecked({
+    setEventChecked({
       [currentEvent]: true,
     });
   };
@@ -38,7 +38,7 @@ const Week = ({ weekDates, events, setEvents }) => {
             dataDay={dayStart.getDate()}
             dayEvents={dayEvents}
             setEvents={setEvents}
-            checked={checked}
+            eventChecked={eventChecked}
           />
         );
       })}
@@ -49,8 +49,9 @@ Week.propTypes = {
   events: PropTypes.array,
   weekDates: PropTypes.array.isRequired,
   setEvents: PropTypes.func.isRequired,
+  setVisibility: PropTypes.func.isRequired,
 };
 Week.defaultProps = {
-  events: null,
+  events: [],
 };
 export default Week;

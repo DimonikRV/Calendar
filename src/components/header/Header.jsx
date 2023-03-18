@@ -1,35 +1,43 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./header.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { getWeekStartDate } from '../../utils/dateUtils';
+import './header.scss';
 
 const Header = ({
-  handelChangeWeek,
-  handelCurrentWeek,
+  startDate,
   handelCreateEvent,
   currentMonths,
+  changeStartDate,
+  generateWeekDates,
 }) => {
+  const handelChangeWeek = event => {
+    if (event.target.classList.contains('fa-chevron-left')) {
+      changeStartDate(moment(getWeekStartDate(startDate)).subtract(7, 'days'));
+    } else {
+      changeStartDate(moment(getWeekStartDate(startDate)).add(7, 'days'));
+    }
+    generateWeekDates();
+  };
+
+  const handelCurrentWeek = () => {
+    changeStartDate(new Date());
+    generateWeekDates();
+  };
+
   return (
     <header className="header">
       <button className="button create-event-btn" onClick={handelCreateEvent}>
         <i className="fas fa-plus create-event-btn__icon"></i>Create
       </button>
       <div className="navigation">
-        <button
-          className="navigation__today-btn button"
-          onClick={handelCurrentWeek}
-        >
+        <button className="navigation__today-btn button" onClick={handelCurrentWeek}>
           Today
         </button>
-        <button
-          className="icon-button navigation__nav-icon"
-          onClick={handelChangeWeek}
-        >
+        <button className="icon-button navigation__nav-icon" onClick={handelChangeWeek}>
           <i className="fas fa-chevron-left"></i>
         </button>
-        <button
-          className="icon-button navigation__nav-icon"
-          onClick={handelChangeWeek}
-        >
+        <button className="icon-button navigation__nav-icon" onClick={handelChangeWeek}>
           <i className="fas fa-chevron-right"></i>
         </button>
         <span className="navigation__displayed-month">{currentMonths}</span>
@@ -39,8 +47,9 @@ const Header = ({
 };
 
 Header.propTypes = {
-  handelChangeWeek: PropTypes.func.isRequired,
-  handelCurrentWeek: PropTypes.func.isRequired,
+  generateWeekDates: PropTypes.func.isRequired,
+  changeStartDate: PropTypes.func.isRequired,
+  startDate: PropTypes.object.isRequired,
   handelCreateEvent: PropTypes.func.isRequired,
   currentMonths: PropTypes.string.isRequired,
 };

@@ -3,7 +3,7 @@ import Hour from '../hour/Hour';
 import PropTypes from 'prop-types';
 import './day.scss';
 
-const Day = ({ dataDay, dayEvents, setEvents, checked }) => {
+const Day = ({ dataDay, dayEvents, setEvents, eventChecked }) => {
   const hours = new Array(24).fill().map((val, index) => index);
 
   return (
@@ -15,10 +15,10 @@ const Day = ({ dataDay, dayEvents, setEvents, checked }) => {
           <Hour
             key={dataDay + hour}
             dataHour={hour}
-            hourEvents={hourEvents}
             dataDay={dataDay}
+            hourEvents={hourEvents}
             setEvents={setEvents}
-            checked={checked}
+            eventChecked={eventChecked}
           />
         );
       })}
@@ -28,10 +28,9 @@ const Day = ({ dataDay, dayEvents, setEvents, checked }) => {
 
 Day.propTypes = {
   dayEvents: PropTypes.array,
-  currentEvent: PropTypes.number,
   dataDay: PropTypes.number.isRequired,
   setEvents: PropTypes.func.isRequired,
-  checked: PropTypes.object.isRequired,
+  eventChecked: PropTypes.object.isRequired,
 };
 Day.defaultProps = {
   dayEvents: [],

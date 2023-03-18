@@ -7,7 +7,7 @@ import Modal from '../modal/Modal';
 import { renderEvents } from '../../gateway/events';
 import './calendar.scss';
 
-const Calendar = ({ weekDates, isVisible, handleCloseModal, setVisibility }) => {
+const Calendar = ({ generateWeekDates, isVisible, handleCloseModal, setVisibility }) => {
   const [events, setEvents] = useState(null);
 
   useEffect(() => {
@@ -15,6 +15,8 @@ const Calendar = ({ weekDates, isVisible, handleCloseModal, setVisibility }) => 
   }, []);
 
   const closeDelBtn = event => {};
+
+  const weekDates = generateWeekDates();
 
   if (!events) {
     return null;
@@ -45,7 +47,7 @@ const Calendar = ({ weekDates, isVisible, handleCloseModal, setVisibility }) => 
 };
 
 Calendar.propTypes = {
-  weekDates: PropTypes.array.isRequired,
+  generateWeekDates: PropTypes.func.isRequired,
   isVisible: PropTypes.bool.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
   setVisibility: PropTypes.func.isRequired,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { deleteEvent, renderEvents } from '../../gateway/events';
 import './event.scss';
 
-const Event = ({ height, top, title, time, weekFirstEvent, setEvents, checked, id }) => {
+const Event = ({ height, top, title, time, setEvents, eventChecked, id }) => {
   let checkedEvent;
 
   const handleDeleteEvent = () => {
@@ -20,18 +20,18 @@ const Event = ({ height, top, title, time, weekFirstEvent, setEvents, checked, i
     position: 'relative',
   };
 
-  const [idEvent, value] = Object.entries(checked).reduce(
+  const [idEvent, value] = Object.entries(eventChecked).reduce(
     (acc, curEvent) => acc.concat(curEvent),
     [],
   );
 
-  if (idEvent === weekFirstEvent) {
+  if (idEvent === id) {
     checkedEvent = value;
   }
 
   return (
     <>
-      <div className="event" style={eventStyle} data-event={weekFirstEvent}>
+      <div className="event" style={eventStyle} data-event={id}>
         <div className="event-body">
           <div className="event__title">{title}</div>
           <div className="event__time">{time}</div>
@@ -73,13 +73,13 @@ const Event = ({ height, top, title, time, weekFirstEvent, setEvents, checked, i
   );
 };
 Event.propTypes = {
-  weekFirstEvent: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   height: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
   setEvents: PropTypes.func.isRequired,
-  checked: PropTypes.object.isRequired,
+  eventChecked: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Event;
