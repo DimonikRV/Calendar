@@ -5,28 +5,26 @@ import './week.scss';
 
 const Week = ({ weekDates, events, setEvents }) => {
   const [eventChecked, setEventChecked] = useState({});
-  let currentEvent;
 
   const handleChoose = event => {
     event.stopPropagation();
-    if (!event.target.closest('.event')) {
-      const buttnId = document.querySelector('.event').dataset.event;
-      setEventChecked({
-        [buttnId]: false,
-      });
-      return;
+
+    const currentEvent = event.target.closest('.event');
+
+    if (!currentEvent) {
+      setEventChecked(null);
     }
-    currentEvent = event.target.closest('.event').dataset.event;
+    const currentEventId = currentEvent.dataset.event;
 
     setEventChecked({
-      [currentEvent]: true,
+      [currentEventId]: true,
     });
   };
 
   return (
     <div className="calendar__week" onClick={handleChoose}>
       {weekDates.map(dayStart => {
-        const dayEnd = new Date(dayStart.getTime()).setHours(dayStart.getHours() + 24);
+        const dayEnd = new Date(dayStart).setHours(dayStart.getHours() + 24);
 
         const dayEvents = events.filter(
           event => new Date(event.dateFrom) > dayStart && new Date(event.dateTo) < dayEnd,

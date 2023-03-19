@@ -14,8 +14,6 @@ const Calendar = ({ generateWeekDates, isVisible, handleCloseModal, setVisibilit
     renderEvents(setEvents);
   }, []);
 
-  const closeDelBtn = event => {};
-
   const weekDates = generateWeekDates();
 
   if (!events) {
@@ -23,7 +21,7 @@ const Calendar = ({ generateWeekDates, isVisible, handleCloseModal, setVisibilit
   }
 
   return (
-    <section className="calendar" onClick={closeDelBtn}>
+    <section className="calendar">
       <Navigation weekDates={weekDates} />
       <div className="calendar__body">
         <div className="calendar__week-container">
