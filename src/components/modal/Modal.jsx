@@ -48,7 +48,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
     const eventForm = document.querySelector('.event-form');
 
     postEvent(newEvent)
-      .then(renderEvents())
+      .then(() => renderEvents())
       .then(() => setVisibility(false))
       .then(() => eventForm.reset())
       .catch(error => alert(error.message));
