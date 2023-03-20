@@ -31,6 +31,10 @@ export const deleteEvent = async eventId => {
   }
 };
 export const renderEvents = async setEvents => {
-  const eventsData = await getEvents();
-  setEvents(eventsData);
+  try {
+    const eventsData = await getEvents();
+    setEvents(eventsData);
+  } catch (error) {
+    alert("Can't display events");
+  }
 };
