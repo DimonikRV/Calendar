@@ -1,28 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Day from '../day/Day';
 import PropTypes from 'prop-types';
 import './week.scss';
 
 const Week = ({ weekDates, events, setEvents }) => {
-  const [eventChecked, setEventChecked] = useState({});
-
-  const handleChoose = event => {
-    event.stopPropagation();
-
-    const currentEvent = event.target.closest('.event');
-
-    if (!currentEvent) {
-      setEventChecked(null);
-    }
-    const currentEventId = currentEvent.dataset.event;
-
-    setEventChecked({
-      [currentEventId]: true,
-    });
-  };
-
   return (
-    <div className="calendar__week" onClick={handleChoose}>
+    <div className="calendar__week">
       {weekDates.map(dayStart => {
         const dayEnd = new Date(dayStart).setHours(dayStart.getHours() + 24);
 
@@ -36,7 +19,6 @@ const Week = ({ weekDates, events, setEvents }) => {
             dataDay={dayStart.getDate()}
             dayEvents={dayEvents}
             setEvents={setEvents}
-            eventChecked={eventChecked}
           />
         );
       })}

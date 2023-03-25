@@ -4,7 +4,7 @@ import { renderEvents, postEvent } from '../../gateway/events';
 import PropTypes from 'prop-types';
 import './modal.scss';
 
-const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
+const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
   const [formData, setFormData] = useState({
     title: '',
     date: '',
@@ -35,7 +35,8 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
     }
   };
 
-  const handleSubmitEvent = () => {
+  const handleSubmitEvent = event => {
+    event.preventDefault();
     const dateFrom = getDateFromEvent(date, startTime);
     const dateTo = getDateFromEvent(date, endTime);
     const newEvent = {
@@ -45,12 +46,18 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility }) => {
       dateTo,
     };
 
-    const eventForm = document.querySelector('.event-form');
-
     postEvent(newEvent)
-      .then(() => renderEvents())
+      .then(() => renderEvents(setEvents))
       .then(() => setVisibility(false))
-      .then(() => eventForm.reset())
+      .then(() =>
+        setFormData({
+          title: '',
+          date: '',
+          startTime: '',
+          endTime: '',
+          description: '',
+        }),
+      )
       .catch(error => alert(error.message));
   };
 

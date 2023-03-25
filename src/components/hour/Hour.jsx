@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Event from '../event/Event';
 import './hour.scss';
 
-const Hour = ({ dataHour, dataDay, hourEvents, setEvents, eventChecked }) => {
+const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
   const [currentMinute, setCurrentMinute] = useState(moment(new Date()).minute());
 
   useEffect(() => {
@@ -47,7 +47,6 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents, eventChecked }) => {
               time={`${eventStart} - ${eventEnd}`}
               title={title}
               setEvents={setEvents}
-              eventChecked={eventChecked}
               id={id}
             />
           );
@@ -61,7 +60,6 @@ Hour.propTypes = {
   dataDay: PropTypes.number.isRequired,
   hourEvents: PropTypes.array.isRequired,
   setEvents: PropTypes.func.isRequired,
-  eventChecked: PropTypes.object.isRequired,
 };
 Hour.defaultProps = {
   hourEvents: [],

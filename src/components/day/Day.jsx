@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import './day.scss';
 
-const Day = ({ dataDay, dayEvents, setEvents, eventChecked }) => {
+const Day = ({ dataDay, dayEvents, setEvents }) => {
   const hours = new Array(24).fill().map((val, index) => index);
 
   return (
@@ -19,7 +19,6 @@ const Day = ({ dataDay, dayEvents, setEvents, eventChecked }) => {
             dataDay={dataDay}
             hourEvents={hourEvents}
             setEvents={setEvents}
-            eventChecked={eventChecked}
           />
         );
       })}
@@ -31,7 +30,6 @@ Day.propTypes = {
   dayEvents: PropTypes.array,
   dataDay: PropTypes.number.isRequired,
   setEvents: PropTypes.func.isRequired,
-  eventChecked: PropTypes.object.isRequired,
 };
 Day.defaultProps = {
   dayEvents: [],

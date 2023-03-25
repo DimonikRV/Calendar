@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { deleteEvent, renderEvents } from '../../gateway/events';
 import Button from '../button/Button';
 import './event.scss';
 
-const Event = ({ height, top, title, time, setEvents, eventChecked, id }) => {
-  const handleDeleteEvent = () => {
-    deleteEvent(id)
-      .then(() => renderEvents(setEvents))
-      .catch(error => alert(error.message));
-  };
-
+const Event = ({ height, top, title, time, setEvents, id }) => {
+  const [eventChecked, setEventChecked] = useState(false);
   const eventStyle = {
     height,
     top,
@@ -19,32 +14,27 @@ const Event = ({ height, top, title, time, setEvents, eventChecked, id }) => {
     position: 'relative',
   };
 
-  const toggleChecked = (eventChecked, id) => {
-    let checked;
-    if (!eventChecked) {
-      return false;
-    }
-    const [idEvent, value] = Object.entries(eventChecked).reduce(
-      (acc, curEvent) => acc.concat(curEvent),
-      [],
-    );
-    if (idEvent === id) {
-      checked = value;
-    }
-    return checked;
+  const handleDeleteEvent = () => {
+    deleteEvent(id)
+      .then(() => setEventChecked(false))
+      .then(() => renderEvents(setEvents))
+      .catch(error => alert(error.message));
   };
-
-  const checkedEvent = toggleChecked(eventChecked, id);
 
   return (
     <>
-      <div className="event" style={eventStyle} data-event={id}>
+      <div
+        className="event"
+        style={eventStyle}
+        data-event={id}
+        onClick={() => setEventChecked(true)}
+      >
         <div className="event-body">
           <div className="event__title">{title}</div>
           <div className="event__time">{time}</div>
         </div>
       </div>
-      {checkedEvent && (
+      {eventChecked && (
         <Button type="button" handleDeleteEvent={handleDeleteEvent} height={height - 5}>
           <i className="fa fa-trash" aria-hidden="true"></i>
           <span className="delete-event-btn__name">Delete</span>
@@ -59,7 +49,6 @@ Event.propTypes = {
   height: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
   setEvents: PropTypes.func.isRequired,
-  eventChecked: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
 };
 
