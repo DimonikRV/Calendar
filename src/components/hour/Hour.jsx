@@ -5,16 +5,16 @@ import Event from '../event/Event';
 import './hour.scss';
 
 const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
-  const [currentMinute, setCurrentMinute] = useState(moment(new Date()).minute());
+  const [currentMinute, setCurrentMinute] = useState(moment().minute());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentMinute(moment(new Date()).minute());
+      setCurrentMinute(moment().minute());
     }, 6000);
     return () => clearInterval(interval);
   }, []);
 
-  const isRedLine = moment(new Date()).hour() === dataHour && moment(new Date()).date() === dataDay;
+  const isRedLine = moment().hour() === dataHour && moment().date() === dataDay;
 
   return (
     <div className="calendar__time-slot" data-time={dataHour}>

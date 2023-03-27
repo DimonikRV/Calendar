@@ -2,11 +2,10 @@ import React from 'react';
 import Hour from '../hour/Hour';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { hours } from '../../utils/dateUtils';
 import './day.scss';
 
 const Day = ({ dataDay, dayEvents, setEvents }) => {
-  const hours = new Array(24).fill().map((val, index) => index);
-
   return (
     <div className="calendar__day" data-day={dataDay}>
       {hours.map(hour => {

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import moment from 'moment';
 import Header from './components/header/Header';
 import Calendar from './components/calendar/Calendar';
 
@@ -13,7 +14,7 @@ import './common.scss';
 
 const App = () => {
   const [visibility, setVisibility] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(moment());
 
   const generateWeekDates = useCallback(
     () => generateWeekRange(getWeekStartDate(startDate)),

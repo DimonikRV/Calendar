@@ -21,7 +21,7 @@ const Header = ({
   };
 
   const handelCurrentWeek = () => {
-    changeStartDate(new Date());
+    changeStartDate(moment());
     generateWeekDates();
   };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { days } from '../../utils/dateUtils.js';
@@ -9,9 +10,8 @@ const Navigation = ({ weekDates }) => {
     <>
       <header className="calendar__header">
         {weekDates.map(dayDate => {
-          const date = new Date(dayDate).getDate();
-          const currentDate =
-            new Date().getDay() === new Date(dayDate).getDay() && new Date().getDate() === date;
+          const date = moment(dayDate).date();
+          const currentDate = moment().day() === moment(dayDate).day() && moment().date() === date;
 
           return (
             <div className="calendar__day-label day-label" key={date}>
@@ -20,14 +20,14 @@ const Navigation = ({ weekDates }) => {
                   'day-label__day-name_match': currentDate,
                 })}
               >
-                {days[dayDate.getDay()]}
+                {days[moment(dayDate).day()]}
               </span>
               <span
                 className={classNames('day-label__day-number', {
                   'day-label__day-number_match': currentDate,
                 })}
               >
-                {dayDate.getDate()}
+                {moment(dayDate).date()}
               </span>
             </div>
           );

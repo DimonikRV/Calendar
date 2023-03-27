@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import Day from '../day/Day';
 import PropTypes from 'prop-types';
 import './week.scss';
@@ -7,16 +8,16 @@ const Week = ({ weekDates, events, setEvents }) => {
   return (
     <div className="calendar__week">
       {weekDates.map(dayStart => {
-        const dayEnd = new Date(dayStart).setHours(dayStart.getHours() + 24);
+        const dayEnd = moment(dayStart).endOf('day');
 
         const dayEvents = events.filter(
-          event => new Date(event.dateFrom) > dayStart && new Date(event.dateTo) < dayEnd,
+          event => moment(event.dateFrom) > moment(dayStart) && moment(event.dateTo) < dayEnd,
         );
 
         return (
           <Day
-            key={dayStart.getDate()}
-            dataDay={dayStart.getDate()}
+            key={moment(dayStart).date()}
+            dataDay={moment(dayStart).date()}
             dayEvents={dayEvents}
             setEvents={setEvents}
           />
