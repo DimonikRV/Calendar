@@ -4,7 +4,7 @@
 ## _Tech Stack:_
 
 [![N|Solid](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)](https://sass-lang.com/)   [![N|Solid](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://reactjs.org/) [![N|Solid](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)](https://webpack.js.org/) 
-[![N|Solid](https://img.shields.io/badge/Redux_Toolkit-violet.svg?style=for-the-badge&logo=Redux&logoColor=white)](https://redux-toolkit.js.org/) 
+[![N|Solid](https://img.shields.io/badge/Redux_Toolkit-hotviolet.svg?style=for-the-badge&logo=Redux&logoColor=white)](https://redux-toolkit.js.org/) 
 
 ## Installation
 
