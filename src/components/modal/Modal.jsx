@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import ErrorMessage from '../errors/error_message/ErrorMessage.jsx';
 import { getDateFromEvent } from '../../utils/dateUtils.js';
+import { isMultipleOfFifteen, validateTimeMultFifteen } from '../../utils/validate.requirements.js';
 import { renderEvents, postEvent } from '../../gateway/events';
 import PropTypes from 'prop-types';
 import './modal.scss';
@@ -12,14 +14,20 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
     endTime: '',
     description: '',
   });
-
+  const [validate, setValidate] = useState(true);
   const handleChange = event => {
     const { name, value } = event.target;
 
-    setFormData({
+    const changedFormData = {
       ...formData,
       [name]: value,
-    });
+    };
+
+    if (changedFormData.startTime && changedFormData.endTime) {
+      setValidate(validateTimeMultFifteen(isMultipleOfFifteen, changedFormData));
+    }
+
+    setFormData(changedFormData);
   };
 
   const { date, startTime, endTime, description, title } = formData;
@@ -60,6 +68,16 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
       )
       .catch(error => alert(error.message));
   };
+  const resetForm = () => {
+    handleCloseModal();
+    setFormData({
+      title: '',
+      date: '',
+      startTime: '',
+      endTime: '',
+      description: '',
+    });
+  };
 
   if (!isVisible) {
     return null;
@@ -69,7 +87,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          <button className="create-event__close-btn" onClick={handleCloseModal}>
+          <button className="create-event__close-btn" onClick={() => resetForm()}>
             +
           </button>
           <form className="event-form">
@@ -102,6 +120,7 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
                 required
               />
               <span> - </span>
+
               <input
                 type="time"
                 name="endTime"
@@ -110,7 +129,9 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
                 onChange={handleChange}
                 required
               />
+              {!validate && <ErrorMessage message={'choose time multiple of 15 minutes'} />}
             </div>
+
             <textarea
               name="description"
               className="event-form__field-description"
@@ -120,7 +141,12 @@ const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
               onFocus={handleFocus}
               onBlur={handleBlur}
             ></textarea>
-            <button type="submit" className="event-form__submit-btn" onClick={handleSubmitEvent}>
+            <button
+              type="submit"
+              className="event-form__submit-btn"
+              disabled={!validate}
+              onClick={handleSubmitEvent}
+            >
               Create
             </button>
           </form>
