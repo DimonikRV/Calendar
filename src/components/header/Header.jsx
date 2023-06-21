@@ -6,7 +6,6 @@ import {
   fillModalData,
   getCurrentDate,
   getCurrentEndHour,
-  fillModal,
 } from '../../utils/dateUtils';
 import './header.scss';
 

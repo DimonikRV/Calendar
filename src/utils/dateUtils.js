@@ -77,8 +77,10 @@ export const fillModalData = ({
   if (dayStart) {
     const currentHour = event.target.dataset.time;
     date = moment(dayStart).set('hour', currentHour);
+    console.log(date);
+  } else {
+    date = moment();
   }
-  date = moment();
   console.log(date);
   const currentDate = getCurrentDate(date, getCurrentEndHour);
   setFormData(prev => ({
