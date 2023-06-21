@@ -1,20 +1,30 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import moment from 'moment';
 import Header from './components/header/Header';
 import Calendar from './components/calendar/Calendar';
+import Modal from './components/modal/Modal';
+import { renderEvents } from './gateway/events';
 
-import {
-  getWeekStartDate,
-  generateWeekRange,
-  getCurrentMonths,
-  months,
-} from '../src/utils/dateUtils.js';
+import { getWeekStartDate, generateWeekRange, getCurrentMonths, months } from './utils/dateUtils';
 
 import './common.scss';
 
 const App = () => {
   const [visibility, setVisibility] = useState(false);
   const [startDate, setStartDate] = useState(moment());
+  const [formData, setFormData] = useState({
+    title: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    description: '',
+  });
+
+  const [events, setEvents] = useState(null);
+
+  useEffect(() => {
+    renderEvents(setEvents);
+  }, []);
 
   const generateWeekDates = useCallback(
     () => generateWeekRange(getWeekStartDate(startDate)),
@@ -43,10 +53,19 @@ const App = () => {
       />
       <Calendar
         generateWeekDates={generateWeekDates}
+        handelModalOpen={handelModalOpen}
+        setVisibility={setVisibility}
+        setFormData={setFormData}
+        setEvents={setEvents}
+        events={events}
+      />
+      <Modal
         isVisible={visibility}
         handleCloseModal={handleCloseModal}
+        setEvents={setEvents}
         setVisibility={setVisibility}
-        handelModalOpen={handelModalOpen}
+        setFormData={setFormData}
+        formData={formData}
       />
     </>
   );
