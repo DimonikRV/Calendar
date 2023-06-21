@@ -2,12 +2,32 @@ import React from 'react';
 import Hour from '../hour/Hour';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { hours } from '../../utils/dateUtils';
+import {
+  hours,
+  getCurrentEndHour,
+  fillSelectedModalData,
+  getCurrentDate,
+} from '../../utils/dateUtils';
 import './day.scss';
 
-const Day = ({ dataDay, dayEvents, setEvents }) => {
+const Day = ({ dayStart, dayEvents, setEvents, handelModalOpen, setFormData }) => {
+  const dataDay = moment(dayStart).date();
+
   return (
-    <div className="calendar__day" data-day={dataDay}>
+    <div
+      className="calendar__day"
+      data-day={dataDay}
+      onClick={event =>
+        fillSelectedModalData(
+          event,
+          dayStart,
+          setFormData,
+          getCurrentEndHour,
+          handelModalOpen,
+          getCurrentDate,
+        )
+      }
+    >
       {hours.map(hour => {
         const hourEvents = dayEvents.filter(event => moment(event.dateFrom).hour() === hour);
 
@@ -27,7 +47,7 @@ const Day = ({ dataDay, dayEvents, setEvents }) => {
 
 Day.propTypes = {
   dayEvents: PropTypes.array,
-  dataDay: PropTypes.number.isRequired,
+  dayStart: PropTypes.string.isRequired,
   setEvents: PropTypes.func.isRequired,
 };
 Day.defaultProps = {

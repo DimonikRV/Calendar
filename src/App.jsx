@@ -25,7 +25,7 @@ const App = () => {
 
   const changeStartDate = date => setStartDate(date);
 
-  const handelCreateEvent = () => {
+  const handelModalOpen = () => {
     setVisibility(true);
   };
   const handleCloseModal = () => {
@@ -38,7 +38,7 @@ const App = () => {
         generateWeekDates={generateWeekDates}
         changeStartDate={changeStartDate}
         startDate={startDate}
-        handelCreateEvent={handelCreateEvent}
+        handelModalOpen={handelModalOpen}
         currentMonths={currentMonths}
       />
       <Calendar
@@ -46,6 +46,7 @@ const App = () => {
         isVisible={visibility}
         handleCloseModal={handleCloseModal}
         setVisibility={setVisibility}
+        handelModalOpen={handelModalOpen}
       />
     </>
   );

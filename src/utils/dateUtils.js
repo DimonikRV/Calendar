@@ -46,3 +46,42 @@ export const months = [
   'November',
   'December',
 ];
+export const getCurrentEndHour = currentStartHour => {
+  const nextHour = Number(currentStartHour.split(':')[0]) + 1;
+  return nextHour < 10 ? `0${nextHour}:00` : `${nextHour}:00`;
+};
+
+export const getCurrentDate = (data, getCurrentEndHour) => {
+  const date = data.format('YYYY-MM-DD');
+  const startTime = data.format('HH:mm');
+  const endTime = getCurrentEndHour(startTime);
+
+  return {
+    date,
+    startTime,
+    endTime,
+  };
+};
+
+export const fillSelectedModalData = (
+  event,
+  dayStart,
+  setFormData,
+  getCurrentEndHour,
+  handelModalOpen,
+  getCurrentDate,
+) => {
+  const currentHour = event.target.dataset.time;
+  const currentDatePicker = moment(dayStart).set('hour', currentHour);
+  const currentDate = getCurrentDate(currentDatePicker, getCurrentEndHour);
+
+  setFormData(prev => ({
+    ...prev,
+    ...currentDate,
+  }));
+  handelModalOpen();
+};
+export const fillModalData = () => {
+  const date = moment();
+  const currentDate = getCurrentDate(date, getCurrentEndHour);
+};

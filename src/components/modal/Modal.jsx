@@ -6,15 +6,16 @@ import { renderEvents, postEvent } from '../../gateway/events';
 import PropTypes from 'prop-types';
 import './modal.scss';
 
-const Modal = ({ isVisible, handleCloseModal, setVisibility, setEvents }) => {
-  const [formData, setFormData] = useState({
-    title: '',
-    date: '',
-    startTime: '',
-    endTime: '',
-    description: '',
-  });
+const Modal = ({
+  isVisible,
+  handleCloseModal,
+  setVisibility,
+  setEvents,
+  formData,
+  setFormData,
+}) => {
   const [validate, setValidate] = useState(true);
+
   const handleChange = event => {
     const { name, value } = event.target;
 

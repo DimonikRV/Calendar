@@ -7,7 +7,21 @@ import Modal from '../modal/Modal';
 import { renderEvents } from '../../gateway/events';
 import './calendar.scss';
 
-const Calendar = ({ generateWeekDates, isVisible, handleCloseModal, setVisibility }) => {
+const Calendar = ({
+  generateWeekDates,
+  isVisible,
+  handleCloseModal,
+  setVisibility,
+  handelModalOpen,
+}) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    description: '',
+  });
+
   const [events, setEvents] = useState(null);
 
   useEffect(() => {
@@ -31,6 +45,8 @@ const Calendar = ({ generateWeekDates, isVisible, handleCloseModal, setVisibilit
             events={events}
             setVisibility={setVisibility}
             setEvents={setEvents}
+            handelModalOpen={handelModalOpen}
+            setFormData={setFormData}
           />
         </div>
         <Modal
@@ -38,6 +54,8 @@ const Calendar = ({ generateWeekDates, isVisible, handleCloseModal, setVisibilit
           handleCloseModal={handleCloseModal}
           setEvents={setEvents}
           setVisibility={setVisibility}
+          setFormData={setFormData}
+          formData={formData}
         />
       </div>
     </section>

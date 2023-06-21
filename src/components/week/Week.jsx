@@ -4,7 +4,7 @@ import Day from '../day/Day';
 import PropTypes from 'prop-types';
 import './week.scss';
 
-const Week = ({ weekDates, events, setEvents }) => {
+const Week = ({ weekDates, events, setEvents, handelModalOpen, setFormData }) => {
   return (
     <div className="calendar__week">
       {weekDates.map(dayStart => {
@@ -17,9 +17,11 @@ const Week = ({ weekDates, events, setEvents }) => {
         return (
           <Day
             key={moment(dayStart).date()}
-            dataDay={moment(dayStart).date()}
+            dayStart={dayStart}
             dayEvents={dayEvents}
             setEvents={setEvents}
+            handelModalOpen={handelModalOpen}
+            setFormData={setFormData}
           />
         );
       })}
