@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { getWeekStartDate } from '../../utils/dateUtils';
+import {
+  getWeekStartDate,
+  fillModalData,
+  getCurrentDate,
+  getCurrentEndHour,
+} from '../../utils/dateUtils';
 import './header.scss';
 
 const Header = ({
@@ -10,6 +15,7 @@ const Header = ({
   currentMonths,
   changeStartDate,
   generateWeekDates,
+  setFormData,
 }) => {
   const handelChangeWeek = event => {
     if (event.target.classList.contains('fa-chevron-left')) {
@@ -27,7 +33,12 @@ const Header = ({
 
   return (
     <header className="header">
-      <button className="button create-event-btn" onClick={handelModalOpen}>
+      <button
+        className="button create-event-btn"
+        onClick={() =>
+          fillModalData(getCurrentDate, handelModalOpen, setFormData, getCurrentEndHour)
+        }
+      >
         <i className="fas fa-plus create-event-btn__icon"></i>Create
       </button>
       <div className="navigation">

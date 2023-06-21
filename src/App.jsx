@@ -50,6 +50,7 @@ const App = () => {
         startDate={startDate}
         handelModalOpen={handelModalOpen}
         currentMonths={currentMonths}
+        setFormData={setFormData}
       />
       <Calendar
         generateWeekDates={generateWeekDates}

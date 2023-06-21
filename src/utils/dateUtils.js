@@ -48,7 +48,9 @@ export const months = [
 ];
 export const getCurrentEndHour = currentStartHour => {
   const nextHour = Number(currentStartHour.split(':')[0]) + 1;
-  return nextHour < 10 ? `0${nextHour}:00` : `${nextHour}:00`;
+  return nextHour < 10
+    ? `0${nextHour}:${currentStartHour.split(':')[1]}`
+    : `${nextHour}:${currentStartHour.split(':')[1]}`;
 };
 
 export const getCurrentDate = (data, getCurrentEndHour) => {
@@ -81,7 +83,12 @@ export const fillSelectedModalData = (
   }));
   handelModalOpen();
 };
-export const fillModalData = () => {
+export const fillModalData = (getCurrentDate, handelModalOpen, setFormData, getCurrentEndHour) => {
   const date = moment();
   const currentDate = getCurrentDate(date, getCurrentEndHour);
+  setFormData(prev => ({
+    ...prev,
+    ...currentDate,
+  }));
+  handelModalOpen();
 };
