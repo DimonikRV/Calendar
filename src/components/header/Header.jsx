@@ -6,6 +6,7 @@ import {
   fillModalData,
   getCurrentDate,
   getCurrentEndHour,
+  fillModal,
 } from '../../utils/dateUtils';
 import './header.scss';
 
@@ -35,8 +36,8 @@ const Header = ({
     <header className="header">
       <button
         className="button create-event-btn"
-        onClick={() =>
-          fillModalData(getCurrentDate, handelModalOpen, setFormData, getCurrentEndHour)
+        onClick={event =>
+          fillModalData({ getCurrentDate, handelModalOpen, setFormData, getCurrentEndHour })
         }
       >
         <i className="fas fa-plus create-event-btn__icon"></i>Create

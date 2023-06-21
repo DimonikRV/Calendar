@@ -2,12 +2,7 @@ import React from 'react';
 import Hour from '../hour/Hour';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import {
-  hours,
-  getCurrentEndHour,
-  fillSelectedModalData,
-  getCurrentDate,
-} from '../../utils/dateUtils';
+import { hours, getCurrentEndHour, fillModalData, getCurrentDate } from '../../utils/dateUtils';
 import './day.scss';
 
 const Day = ({ dayStart, dayEvents, setEvents, handelModalOpen, setFormData }) => {
@@ -18,14 +13,14 @@ const Day = ({ dayStart, dayEvents, setEvents, handelModalOpen, setFormData }) =
       className="calendar__day"
       data-day={dataDay}
       onClick={event =>
-        fillSelectedModalData(
+        fillModalData({
           event,
           dayStart,
           setFormData,
           getCurrentEndHour,
           handelModalOpen,
           getCurrentDate,
-        )
+        })
       }
     >
       {hours.map(hour => {

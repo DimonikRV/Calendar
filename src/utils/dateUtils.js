@@ -65,26 +65,21 @@ export const getCurrentDate = (data, getCurrentEndHour) => {
   };
 };
 
-export const fillSelectedModalData = (
+export const fillModalData = ({
   event,
   dayStart,
   setFormData,
   getCurrentEndHour,
   handelModalOpen,
   getCurrentDate,
-) => {
-  const currentHour = event.target.dataset.time;
-  const currentDatePicker = moment(dayStart).set('hour', currentHour);
-  const currentDate = getCurrentDate(currentDatePicker, getCurrentEndHour);
-
-  setFormData(prev => ({
-    ...prev,
-    ...currentDate,
-  }));
-  handelModalOpen();
-};
-export const fillModalData = (getCurrentDate, handelModalOpen, setFormData, getCurrentEndHour) => {
-  const date = moment();
+}) => {
+  let date;
+  if (dayStart) {
+    const currentHour = event.target.dataset.time;
+    date = moment(dayStart).set('hour', currentHour);
+  }
+  date = moment();
+  console.log(date);
   const currentDate = getCurrentDate(date, getCurrentEndHour);
   setFormData(prev => ({
     ...prev,
