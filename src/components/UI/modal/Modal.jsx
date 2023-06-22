@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../errors/error_message/ErrorMessage.jsx';
-import { getDateFromEvent } from '../../utils/dateUtils.js';
-import { isMultipleOfFifteen, validateTimeMultFifteen } from '../../utils/validate.requirements.js';
-import { renderEvents, postEvent } from '../../gateway/events';
+import ErrorMessage from '../errors/error_message/ErrorMessage';
+import { getDateFromEvent } from '../../../utils/dateUtils.js';
+import {
+  MESSAGE_TYPES,
+  isMultipleOfFifteen,
+  validateTimeMultFifteen,
+} from '../../../utils/validate.requirements.js';
+import { renderEvents, postEvent } from '../../../gateway/events.js';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import './modal.scss';
 
 const Modal = ({
   isVisible,
   handleCloseModal,
   setVisibility,
+  events,
   setEvents,
   formData,
   setFormData,
 }) => {
   const [validate, setValidate] = useState(true);
+
+  console.log(events);
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -23,9 +31,36 @@ const Modal = ({
       ...formData,
       [name]: value,
     };
+    const inputStartHour = Number(changedFormData.startTime.split(':')[0]);
+    const inputStartMinutes = Number(changedFormData.startTime.split(':')[1]);
+    const inputEndHour = Number(changedFormData.endTime.split(':')[0]);
+    const inputEndMinutes = Number(changedFormData.endTime.split(':')[1]);
+    console.log('inputFromHour ' + inputStartHour);
+    console.log('inputToHour ' + inputEndHour);
+    console.log('inputFromMinute ' + inputStartMinutes);
+    console.log('inputToMinute ' + inputEndMinutes);
+
+    events.forEach(event => console.log('dateFromHour ' + moment(event.dateFrom).hour()));
+    events.forEach(event => console.log('dateFromMinute ' + moment(event.dateFrom).minute()));
+    events.forEach(event => console.log('dateToHour ' + moment(event.dateTo).hour()));
+    events.forEach(event => console.log('dateToMinute ' + moment(event.dateTo).minute()));
 
     if (changedFormData.startTime && changedFormData.endTime) {
       setValidate(validateTimeMultFifteen(isMultipleOfFifteen, changedFormData));
+    }
+
+    if (validateTimeMultFifteen(isMultipleOfFifteen, changedFormData)) {
+      setValidate(
+        !events.some(
+          event =>
+            inputStartHour >= moment(event.dateFrom).hour() ||
+            (inputStartHour < moment(event.dateFrom).hour() &&
+              inputEndHour > moment(event.dateFrom).hour() &&
+              moment(event.dateFrom).minute()) < inputEndMinutes,
+          // inputEndHour <= moment(event.dateTo).hour() &&
+          // inputEndMinutes <= moment(event.dateTo).minute(),y
+        ),
+      );
     }
 
     setFormData(changedFormData);
@@ -67,7 +102,7 @@ const Modal = ({
           description: '',
         }),
       )
-      .catch(error => alert(error.message));
+      .catch(error => alert(error.message)); //!!!!!!!!!!!!!!!!!!!!!!!!
   };
   const resetForm = () => {
     handleCloseModal();
@@ -130,7 +165,7 @@ const Modal = ({
                 onChange={handleChange}
                 required
               />
-              {!validate && <ErrorMessage message={'choose time multiple of 15 minutes'} />}
+              {!validate && <ErrorMessage message={MESSAGE_TYPES.multOfFifteen} />}
             </div>
 
             <textarea

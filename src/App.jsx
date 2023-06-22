@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import moment from 'moment';
 import Header from './components/header/Header';
 import Calendar from './components/calendar/Calendar';
-import Modal from './components/modal/Modal';
+import Modal from './components/UI/modal/Modal';
 import { renderEvents } from './gateway/events';
 
 import { getWeekStartDate, generateWeekRange, getCurrentMonths, months } from './utils/dateUtils';
@@ -63,6 +63,7 @@ const App = () => {
       <Modal
         isVisible={visibility}
         handleCloseModal={handleCloseModal}
+        events={events}
         setEvents={setEvents}
         setVisibility={setVisibility}
         setFormData={setFormData}

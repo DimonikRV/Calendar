@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { deleteEvent, renderEvents } from '../../gateway/events';
-import Button from '../button/Button';
+import Button from '../UI/button/Button';
 import './event.scss';
 
 const Event = ({ height, top, title, time, setEvents, id }) => {
