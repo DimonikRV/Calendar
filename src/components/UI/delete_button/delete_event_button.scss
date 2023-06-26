@@ -1,0 +1,53 @@
+.delete-event-btn {
+  position: absolute;
+  z-index: 50;
+  left: 40%;
+  display: flex;
+  align-items: center;
+  width: 165px;
+  color: #000;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.1s ease;
+  &__name {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 8px;
+    &:hover {
+      background-color: #f03f3f;
+      color: #fff;
+      .fa {
+        color: #fff;
+      }
+    }
+  }
+  &__cancel {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-left: 5px;
+    padding: 0 3px;
+    line-height: 2;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    &:hover {
+      background-color: #f03f3f;
+      color: #fff;
+    }
+    .cancel {
+      display: inline-flex;
+      transform: rotate(45deg);
+    }
+  }
+  .fa-trash {
+    margin-right: 10px;
+  }
+}

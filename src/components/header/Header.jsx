@@ -8,6 +8,7 @@ import {
   getCurrentEndHour,
 } from '../../utils/dateUtils';
 import './header.scss';
+import Button from '../UI/button/Button';
 
 const Header = ({
   startDate,
@@ -33,18 +34,19 @@ const Header = ({
 
   return (
     <header className="header">
-      <button
-        className="button create-event-btn"
-        onClick={event =>
+      <Button
+        buttonColor={true}
+        button_margin={true}
+        onClick={() =>
           fillModalData({ getCurrentDate, handelModalOpen, setFormData, getCurrentEndHour })
         }
       >
         <i className="fas fa-plus create-event-btn__icon"></i>Create
-      </button>
+      </Button>
       <div className="navigation">
-        <button className="navigation__today-btn button" onClick={handelCurrentWeek}>
+        <Button buttonColor={false} button_margin={false} onClick={handelCurrentWeek}>
           Today
-        </button>
+        </Button>
         <button className="icon-button navigation__nav-icon" onClick={handelChangeWeek}>
           <i className="fas fa-chevron-left"></i>
         </button>

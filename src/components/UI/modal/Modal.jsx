@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../errors/error_message/ErrorMessage';
 import { getDateFromEvent } from '../../../utils/dateUtils.js';
+import { transformEvents } from '../../../utils/events';
 import {
   MESSAGE_TYPES,
   isMultipleOfFifteen,
+  getIsMoreSixHours,
   validateTimeMultFifteen,
 } from '../../../utils/validate.requirements.js';
+import { useValidate } from '../../../hook/useValidate';
 import { renderEvents, postEvent } from '../../../gateway/events.js';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import './modal.scss';
+import Button from '../button/Button';
 
 const Modal = ({
   isVisible,
@@ -21,48 +24,29 @@ const Modal = ({
   setFormData,
 }) => {
   const [validate, setValidate] = useState(true);
+  const [errorStatus, setErrorStatus] = useState('');
 
-  console.log(events);
+  if (!events) {
+    return null;
+  }
+  const dateSortedEvents = transformEvents(events);
 
   const handleChange = event => {
     const { name, value } = event.target;
-
     const changedFormData = {
       ...formData,
       [name]: value,
     };
-    const inputStartHour = Number(changedFormData.startTime.split(':')[0]);
-    const inputStartMinutes = Number(changedFormData.startTime.split(':')[1]);
-    const inputEndHour = Number(changedFormData.endTime.split(':')[0]);
-    const inputEndMinutes = Number(changedFormData.endTime.split(':')[1]);
-    console.log('inputFromHour ' + inputStartHour);
-    console.log('inputToHour ' + inputEndHour);
-    console.log('inputFromMinute ' + inputStartMinutes);
-    console.log('inputToMinute ' + inputEndMinutes);
-
-    events.forEach(event => console.log('dateFromHour ' + moment(event.dateFrom).hour()));
-    events.forEach(event => console.log('dateFromMinute ' + moment(event.dateFrom).minute()));
-    events.forEach(event => console.log('dateToHour ' + moment(event.dateTo).hour()));
-    events.forEach(event => console.log('dateToMinute ' + moment(event.dateTo).minute()));
-
-    if (changedFormData.startTime && changedFormData.endTime) {
-      setValidate(validateTimeMultFifteen(isMultipleOfFifteen, changedFormData));
-    }
-
-    if (validateTimeMultFifteen(isMultipleOfFifteen, changedFormData)) {
-      setValidate(
-        !events.some(
-          event =>
-            inputStartHour >= moment(event.dateFrom).hour() ||
-            (inputStartHour < moment(event.dateFrom).hour() &&
-              inputEndHour > moment(event.dateFrom).hour() &&
-              moment(event.dateFrom).minute()) < inputEndMinutes,
-          // inputEndHour <= moment(event.dateTo).hour() &&
-          // inputEndMinutes <= moment(event.dateTo).minute(),y
-        ),
-      );
-    }
-
+    useValidate(
+      MESSAGE_TYPES,
+      setValidate,
+      setErrorStatus,
+      dateSortedEvents,
+      changedFormData,
+      getIsMoreSixHours,
+      isMultipleOfFifteen,
+      validateTimeMultFifteen,
+    );
     setFormData(changedFormData);
   };
 
@@ -102,7 +86,7 @@ const Modal = ({
           description: '',
         }),
       )
-      .catch(error => alert(error.message)); //!!!!!!!!!!!!!!!!!!!!!!!!
+      .catch(error => alert(error.message));
   };
   const resetForm = () => {
     handleCloseModal();
@@ -165,7 +149,7 @@ const Modal = ({
                 onChange={handleChange}
                 required
               />
-              {!validate && <ErrorMessage message={MESSAGE_TYPES.multOfFifteen} />}
+              {!validate && <ErrorMessage message={errorStatus} />}
             </div>
 
             <textarea
@@ -177,14 +161,17 @@ const Modal = ({
               onFocus={handleFocus}
               onBlur={handleBlur}
             ></textarea>
-            <button
-              type="submit"
-              className="event-form__submit-btn"
-              disabled={!validate}
-              onClick={handleSubmitEvent}
-            >
-              Create
-            </button>
+            <div className="event-form__submit-btn-container">
+              <Button
+                type="submit"
+                disabled={!validate}
+                buttonColor={true}
+                button_margin={true}
+                onClick={handleSubmitEvent}
+              >
+                Create
+              </Button>
+            </div>
           </form>
         </div>
       </div>

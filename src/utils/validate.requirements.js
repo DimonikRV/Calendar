@@ -1,13 +1,20 @@
 export const MESSAGE_TYPES = {
-  multOfFifteen: 'choose time multiple of 15 minutes',
-  overlap: 'two events cannot overlap',
-  lasts: 'event can lasts within one day only',
-  maxSixHour: 'event can lasts only 6 hours',
-  deleteEvent: "event can't be deleted earlier than 15 minutes before begin",
+  multOfFifteen: 'Choose time multiple of 15 minutes',
+  overlap: "Events can't overlap",
+  lasts: 'Event can lasts within one day only',
+  maxSixHour: 'Event can lasts only 6 hours',
+  deleteEvent: "Event can't be deleted earlier than 15 minutes before begin",
 };
 
 export const isMultipleOfFifteen = time => {
   return Number(time.split(':')[1]) % 15 === 0 || time.split(':')[1] === '00';
+};
+
+export const getIsMoreSixHours = (inputStartHour, inputEndHour, inputEndMinutes) => {
+  return (
+    (inputEndHour - inputStartHour === 6 && inputEndMinutes > 0) ||
+    inputEndHour - inputStartHour > 6
+  );
 };
 
 export const validateTimeMultFifteen = (isMultipleOfFifteen, changedFormData) => {

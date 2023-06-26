@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import DeleteEventButton from '../UI/delete_button/DeleteEventButton';
 import PropTypes from 'prop-types';
 import { deleteEvent, renderEvents } from '../../gateway/events';
-import Button from '../UI/button/Button';
 import './event.scss';
 
 const Event = ({ height, top, title, time, setEvents, id }) => {
   const [eventChecked, setEventChecked] = useState(false);
+
   const eventStyle = {
     height,
     top,
@@ -13,8 +14,13 @@ const Event = ({ height, top, title, time, setEvents, id }) => {
     zIndex: '1',
     position: 'relative',
   };
+  const handleDelButtonDisappear = event => {
+    event.stopPropagation();
+    setEventChecked(false);
+  };
 
-  const handleDeleteEvent = () => {
+  const handleDeleteEvent = event => {
+    event.stopPropagation();
     deleteEvent(id)
       .then(() => setEventChecked(false))
       .then(() => renderEvents(setEvents))
@@ -27,7 +33,10 @@ const Event = ({ height, top, title, time, setEvents, id }) => {
         className="event"
         style={eventStyle}
         data-event={id}
-        onClick={() => setEventChecked(true)}
+        onClick={event => {
+          event.stopPropagation();
+          setEventChecked(true);
+        }}
       >
         <div className="event-body">
           <div className="event__title">{title}</div>
@@ -35,10 +44,11 @@ const Event = ({ height, top, title, time, setEvents, id }) => {
         </div>
       </div>
       {eventChecked && (
-        <Button type="button" handleDeleteEvent={handleDeleteEvent} height={height - 5}>
-          <i className="fa fa-trash" aria-hidden="true"></i>
-          <span className="delete-event-btn__name">Delete</span>
-        </Button>
+        <DeleteEventButton
+          height={height}
+          handleDeleteEvent={handleDeleteEvent}
+          handleDelButtonDisappear={handleDelButtonDisappear}
+        />
       )}
     </>
   );

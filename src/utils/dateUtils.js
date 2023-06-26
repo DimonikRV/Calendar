@@ -3,14 +3,14 @@ import moment from 'moment';
 export const getWeekStartDate = date => {
   const dateCopy = date.clone();
 
-  const monday = moment(dateCopy).day(1);
+  const monday = moment(dateCopy).startOf('week');
 
   return monday.format('YYYY-MM-DD');
 };
 
 export const generateWeekRange = startDate => {
   const result = [];
-  for (let i = 1; i < 7; i += 1) {
+  for (let i = 1; i <= 7; i += 1) {
     const base = moment(startDate).clone();
     result.push(base.day(i).format());
   }

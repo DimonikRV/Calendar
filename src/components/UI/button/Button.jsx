@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import './button.scss';
 
-const Button = ({ children, handleDeleteEvent, height, ...props }) => {
+const Button = ({ children, height, buttonColor, button_margin, ...props }) => {
+  const buttonBackground = classNames(
+    'button',
+    { button_red: buttonColor },
+    { button_margin: button_margin },
+  );
   return (
-    <button
-      {...props}
-      className="delete-event-btn"
-      onClick={handleDeleteEvent}
-      style={{
-        top: `${height}px`,
-      }}
-    >
+    <button {...props} className={buttonBackground}>
       {children}
     </button>
   );
