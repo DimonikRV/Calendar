@@ -33,6 +33,8 @@ Week.propTypes = {
   weekDates: PropTypes.array.isRequired,
   setEvents: PropTypes.func.isRequired,
   setVisibility: PropTypes.func.isRequired,
+  handelModalOpen: PropTypes.func.isRequired,
+  setFormData: PropTypes.func.isRequired,
 };
 Week.defaultProps = {
   events: [],

@@ -63,8 +63,9 @@ Header.propTypes = {
   generateWeekDates: PropTypes.func.isRequired,
   changeStartDate: PropTypes.func.isRequired,
   startDate: PropTypes.object.isRequired,
-  handelCreateEvent: PropTypes.func.isRequired,
+  handelModalOpen: PropTypes.func.isRequired,
   currentMonths: PropTypes.string.isRequired,
+  setFormData: PropTypes.func.isRequired,
 };
 
 export default Header;

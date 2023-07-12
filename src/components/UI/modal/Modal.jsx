@@ -180,10 +180,16 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  isVisible: PropTypes.bool,
+  isVisible: PropTypes.bool.isRequired,
   handleCloseModal: PropTypes.func.isRequired,
   setEvents: PropTypes.func.isRequired,
   setVisibility: PropTypes.func.isRequired,
+  events: PropTypes.array,
+  formData: PropTypes.object.isRequired,
+  setFormData: PropTypes.func.isRequired,
+};
+Modal.defaultProps = {
+  events: [],
 };
 
 export default Modal;

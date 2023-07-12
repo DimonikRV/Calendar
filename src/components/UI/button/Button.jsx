@@ -17,8 +17,8 @@ const Button = ({ children, height, buttonColor, button_margin, ...props }) => {
 };
 
 Button.propTypes = {
-  handleDeleteEvent: PropTypes.func.isRequired,
-  height: PropTypes.number.isRequired,
+  handleDeleteEvent: PropTypes.func,
+  height: PropTypes.number,
 };
 
 export default Button;

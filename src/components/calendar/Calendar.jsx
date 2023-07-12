@@ -37,9 +37,12 @@ const Calendar = ({
 
 Calendar.propTypes = {
   generateWeekDates: PropTypes.func.isRequired,
-  isVisible: PropTypes.bool.isRequired,
-  handleCloseModal: PropTypes.func.isRequired,
+  handleModalOpen: PropTypes.func,
   setVisibility: PropTypes.func.isRequired,
+  setEvents: PropTypes.func.isRequired,
+  events: PropTypes.array,
 };
-
+Calendar.defaultProps = {
+  events: [],
+};
 export default Calendar;

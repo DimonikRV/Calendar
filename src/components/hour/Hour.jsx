@@ -58,7 +58,7 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
 Hour.propTypes = {
   dataHour: PropTypes.number.isRequired,
   dataDay: PropTypes.number.isRequired,
-  hourEvents: PropTypes.array.isRequired,
+  hourEvents: PropTypes.array,
   setEvents: PropTypes.func.isRequired,
 };
 Hour.defaultProps = {

@@ -44,6 +44,8 @@ Day.propTypes = {
   dayEvents: PropTypes.array,
   dayStart: PropTypes.string.isRequired,
   setEvents: PropTypes.func.isRequired,
+  handelModalOpen: PropTypes.func.isRequired,
+  setFormData: PropTypes.func.isRequired,
 };
 Day.defaultProps = {
   dayEvents: [],
