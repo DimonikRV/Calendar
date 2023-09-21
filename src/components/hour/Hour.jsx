@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Event from '../event/Event';
 import './hour.scss';
 
-const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
+const Hour = ({ dataHour, dataDay, hourEvents, setEvents, currentMonth }) => {
   const [currentMinute, setCurrentMinute] = useState(moment().minute());
 
   useEffect(() => {
@@ -14,7 +14,10 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const isRedLine = moment().hour() === dataHour && moment().date() === dataDay;
+  const isRedLine =
+    moment().hour() === dataHour &&
+    moment().date() === dataDay &&
+    moment().month() === currentMonth;
 
   return (
     <div className="calendar__time-slot" data-time={dataHour}>
@@ -58,6 +61,7 @@ const Hour = ({ dataHour, dataDay, hourEvents, setEvents }) => {
 Hour.propTypes = {
   dataHour: PropTypes.number.isRequired,
   dataDay: PropTypes.number.isRequired,
+  currentMonth: PropTypes.number.isRequired,
   hourEvents: PropTypes.array,
   setEvents: PropTypes.func.isRequired,
 };

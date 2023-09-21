@@ -5,7 +5,7 @@ import moment from 'moment';
 import { hours, getCurrentEndHour, fillModalData, getCurrentDate } from '../../utils/dateUtils';
 import './day.scss';
 
-const Day = ({ dayStart, dayEvents, setEvents, handelModalOpen, setFormData }) => {
+const Day = ({ dayStart, dayEvents, setEvents, handelModalOpen, setFormData, currentMonth }) => {
   const dataDay = moment(dayStart).date();
 
   return (
@@ -31,6 +31,7 @@ const Day = ({ dayStart, dayEvents, setEvents, handelModalOpen, setFormData }) =
             key={dataDay + hour}
             dataHour={hour}
             dataDay={dataDay}
+            currentMonth={currentMonth}
             hourEvents={hourEvents}
             setEvents={setEvents}
           />
@@ -43,6 +44,7 @@ const Day = ({ dayStart, dayEvents, setEvents, handelModalOpen, setFormData }) =
 Day.propTypes = {
   dayEvents: PropTypes.array,
   dayStart: PropTypes.string.isRequired,
+  currentMonth: PropTypes.number.isRequired,
   setEvents: PropTypes.func.isRequired,
   handelModalOpen: PropTypes.func.isRequired,
   setFormData: PropTypes.func.isRequired,

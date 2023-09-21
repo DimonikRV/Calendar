@@ -8,6 +8,7 @@ const Week = ({ weekDates, events, setEvents, handelModalOpen, setFormData }) =>
   return (
     <div className="calendar__week">
       {weekDates.map(dayStart => {
+        const month = moment(dayStart).month();
         const dayEnd = moment(dayStart).endOf('day');
 
         const dayEvents = events.filter(
@@ -17,6 +18,7 @@ const Week = ({ weekDates, events, setEvents, handelModalOpen, setFormData }) =>
         return (
           <Day
             key={moment(dayStart).date()}
+            currentMonth={month}
             dayStart={dayStart}
             dayEvents={dayEvents}
             setEvents={setEvents}
